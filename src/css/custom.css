@@ -48,3 +48,8 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   0%, 50% {opacity: 0.5}
   51%, 100% {opacity: 0}
 }
+
+.flip_tagline div {
+  display: inline-block;
+  margin: 0 0.2em;
+}
