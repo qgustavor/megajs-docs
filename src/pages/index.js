@@ -5,18 +5,19 @@ import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import styles from './index.module.css'
 import CodeBlockSwitchable from '@site/src/components/CodeBlockSwitchable'
-import { Typewriter } from 'typewriting-react'
 
 function HomepageHeader () {
   const { siteConfig } = useDocusaurusContext()
-  const sentences = ['Node.js', 'Browser', 'Deno', 'JavaScript']
+
+  // TODO: cycle those sentences
+  // const sentences = ['Node.js', 'Browser', 'Deno', 'JavaScript']
 
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className='container'>
         <h1 className='hero__title'>{siteConfig.title}</h1>
         <p className='hero__subtitle'>
-          Unofficial <Typewriter words={sentences} nextWordDelay={5000} erasingSpeed={50} /> SDK for Mega
+          Unofficial JavaScript SDK for Mega
         </p>
         <div className={styles.buttons}>
           <Link
@@ -126,7 +127,7 @@ export default function Home () {
               <div className="col col--12">
                 <ul>
                   <li>This is based on <a href="https://github.com/tonistiigi/mega">tonistiigi's mega library</a>.</li>
-                  <li>This is all unofficial, based on <a href="https://mega.nz/#developers">developer guide</a> and site source.</li>                  
+                  <li>This is all unofficial, based on <a href="https://mega.nz/#developers">developer guide</a> and site source.</li>
                   <li>Make sure you agree with Mega's <a href="https://mega.nz/#terms">Terms of Service</a> before using it.</li>
                 </ul>
               </div>
