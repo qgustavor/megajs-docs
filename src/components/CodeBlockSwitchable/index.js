@@ -9,8 +9,8 @@ export default function CodeBlockSwitchable (props) {
   const modes = [ 'Node ESM', 'Node CJS', version > 0 ? 'Browser/Deno' : 'Browser' ]
   const replacementFns = [
     e => e,
-    e => e.replaceAll(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')"),
-    e => e.replaceAll(/import (.+?) from 'megajs'/g, `import $1 from 'https://unpkg.com/megajs@${version}/dist/main.browser-es.js'`)
+    e => e.replace(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')"),
+    e => e.replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://unpkg.com/megajs@${version}/dist/main.browser-es.js'`)
   ]
 
   return (
