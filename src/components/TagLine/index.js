@@ -75,10 +75,10 @@ export default function TagLine () {
       })
       middleEl.animate([{
         transformOrigin: 'top center',
-        transform: newWord ? 'perspective(10vw) rotateY(-90deg)' : 'none'
+        transform: newWord ? 'perspective(7em) rotateY(-90deg)' : 'none'
       }, {
         transformOrigin: 'top center',
-        transform: newWord ? 'none' : 'perspective(10vw) rotateY(90deg)'
+        transform: newWord ? 'none' : 'perspective(7em) rotateY(90deg)'
       }], {
         duration: 300,
         easing: 'ease-in-out',
