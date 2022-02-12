@@ -36,7 +36,7 @@ function HomepageHeader () {
 
 const codeExampleUpload = `import { Storage } from 'megajs'
 
-const storage = new Storage({
+const storage = await new Storage({
   email: 'user@example.com',
   password: 'correct horse battery example'
 }).ready
