@@ -20,7 +20,7 @@ export default function CodeBlockSwitchable (props) {
         e = e
           .replace(/^(?!import|$)/gm, '  ')
           .replace(/^\s*$/m, "\n// Node don't support top-level await when using CJS\n;(async function () {")
-          .replace(/\n*$/, '\n}())\n')
+          .replace(/\n*$/, '\n}()).catch(error => {\n  console.error(error)\n  process.exit(1)\n})\n')
       }
       e = e
         .replace(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')")
