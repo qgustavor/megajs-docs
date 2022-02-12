@@ -4,6 +4,14 @@ sidebar_position: 2
 
 # API Reference
 
+## Promises
+
+Promise support was added in V1. All functions which used to accept callbacks now also accept promises, except by:
+
+- `new Storage()`: the promise is available in the `.ready` property;
+- `.upload()`: the promise is available in the `.complete` property;
+- `.download()`: call `.downloadBuffer()` instead;
+
 ## Entry point
 
 The exported classes and functions are those below:
@@ -20,15 +28,15 @@ Creates a logged in connection instance to Mega.
 
 ### Creation
 
-import CodeBlockSwitchable from '@site/src/components/CodeBlockSwitchable'
-
-<CodeBlockSwitchable language="js" code="import { Storage } from 'megajs'
-const storage = new Storage(options, [callback])" />
+```js node2deno-v1
+import { Storage } from 'megajs'
+const storage = new Storage(options, [callback])
+```
 
 ### Options
 
-* `email` - User login email.
-* `password` - User password.
+* `email` - User login email **required**.
+* `password` - User password **required**.
 * `keepalive` - Keep connection open to receive server-to-client requests that will be mapped to events. Defaults to `true`.
 * `autologin` - Logins to Mega. Defaults to `true`. Set to `false` if you want to change request options, like proxy, [like shown here](tutorial/advanced.md#setting-request-configuration).
 * `autoload` - Load in file structure. Defaults to `true`.
@@ -39,9 +47,10 @@ Temporary accounts aren't supported. Trying to login without an email or passwor
 
 ### Properties
 
-Only loaded after `readyCallback()` or `ready` event fires.
+Only loaded after `.resolve`, `readyCallback()` or `ready` event fires.
 
 * `name` - Account owner name
+* `user` - Account ID
 * `key` - Account master key
 * `sid` - Current session ID
 * `files` - Hash of `MutableFile` objects by node IDs.
@@ -54,15 +63,15 @@ Only loaded after `readyCallback()` or `ready` event fires.
 
 `.upload` and `.mkdir` methods maps to `storage.root.upload` and `storage.root.mkdir` methods.
 
-#### `.reload(cb)`
+#### `.reload()`
 
 Reloads files tree. No need to call this if `autoload` is used.
 
-#### `.login(cb)`
+#### `.login()`
 
 Logins to Mega. No need to call this if `autologin` is used.
 
-#### `.getAccountInfo(cb)`
+#### `.getAccountInfo()`
 
 Get info related to account and quota usage. It returns a object with the following properties:
 
@@ -89,9 +98,11 @@ Basic class that handle files and folders. Often used to handle **shared** files
 
 ### Creation
 
-<CodeBlockSwitchable language="js" code="import { File } from 'megajs'
+```js node2deno-v1
+import { File } from 'megajs'
 const fileFromUrl = File.fromURL(url)
-const fileFromObject = new File({ downloadId, key })" />
+const fileFromObject = new File({ downloadId, key })
+```
 
 ### Options
 
@@ -128,14 +139,13 @@ Values marked with \* are `null` or `undefined` when an encryption key isn't spe
 
 ### Methods
 
-#### `.loadAttributes(callback)`
+#### `.loadAttributes()`
 
 Load and decrypt file attributes. Attributes normally contain file name (`'n'`) but is possible to put anything there, as long it can be encoded as JSON. Isn't needed for files loaded from logged sessions. Trying to call it in a `MutableFile` will throw an error.
 
 ```js
-file.loadAttributes((err, file) => {
-  // now file properties were loaded
-})
+await file.loadAttributes()
+file.loadAttributes((err, file) => { })
 ```
 
 This function can be also be used to load file information contained in shared folders.
@@ -164,6 +174,10 @@ This function downloads files using chunked multiple parallel connections to spe
 The download function also support `start` and `end` options, like [`fs.createReadStream`](https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options).
 
 If the number of connections get limited to `1` then chunking will be disabled and the entire file will be downloaded using a single connection. For some reason doing this often results in less connection errors. At the moment this feature relies on a node-fetch extension and might not work in non-Node environments.
+
+#### `.downloadBuffer([options])`
+
+Wraps the `.download()` function and return a Promise which resolves to a Buffer containing the file data. Accept the same options as `.download()`. It still accepts a callback, but then it's better to call `.download()` to avoid creating an unneeded promise.
 
 ### Static methods
 
@@ -212,14 +226,20 @@ storage.root.children[0] // the first file in the root of the storage
 #### `.upload(options | name, [data], [callback])`
 
 ```js
+const uploadedFile = await folder.upload('myfile.txt', 'Hello world!').complete
 fs.createReadStream('myfile.txt').pipe(folder.upload('myfile.txt'))
-
 folder.upload('myfile.txt', 'Hello world!', (error, uploadedFile) => {})
 ```
 
 Upload a file to a folder.
 
-To input data you can input a buffer, string or stream in the data argument or, as it returns a [stream](https://nodejs.org/api/stream.html), pipe data into it. To handle upload completion or errors you can either use the callback, which will return either an error as its first argument or the uploaded file instance as its second, or, if you don't specify a callback, listen for `complete` and `error` events.
+To input data you can input a buffer, string or stream in the data argument or, as it returns a [stream](https://nodejs.org/api/stream.html), pipe data into it.
+
+To handle upload completion or errors you can:
+
+- Await for the promise returned by `.complete`.
+- Use the callback, which will return either an error as its first argument or the uploaded file instance as its second.
+- Listen for `complete` and `error` events.
 
 **Supported options:**
 
@@ -241,10 +261,10 @@ Uploading data without encryption is supported and [is documented here](tutorial
 
 The upload stream is always returned even when a callback is specified. Standard events for [Writable Streams](https://nodejs.org/api/stream.html#stream_class_stream_writable), like `error` and `finish`, and methods, like `.pipe()` and `.write()`, work normally.
 
-#### `.mkdir(options | name, callback)`
+#### `.mkdir(options | name)`
 
 ```js
-folder.mkdir('dirname', (err, file) => { ... })
+await folder.mkdir('dirname')
 ```
 
 Create a new folder inside the current folder.
@@ -255,24 +275,22 @@ Create a new folder inside the current folder.
 * `attributes`: object of file attributes
 * `key`: encryption key, Buffer or string; 128 bit; only used internally (when sharing folders other key is used)
 
-#### `.importFile(File | URL, callback)`
+#### `.importFile(File | URL)`
 
 Import a file to the specified folder. It accepts File objects (from `new File`) or URLs of shared files.
 
 ```js
-folder.importFile('https://mega.nz/#!...', (err, file) => {
-  // `file` is a instance of MutableFile
-})
+// Returns an instance of MutableFile
+const file = await folder.importFile('https://mega.nz/#!...')
 ```
 
-#### `.link([options], callback)` / `.shareFolder([options], callback)`
+#### `.link([options])` / `.shareFolder([options])`
 
 Make download link for a file or folder. `.shareFolder` only works for folders, `.link` works for both (but calls `.shareFolder` internally).
 
 ```js
-file.link((err, url) => {
-  // url: https://mega.nz/#!downloadId!key
-})
+// Returns something like https://mega.nz/#!downloadId!key
+const url = await file.link()
 ```
 
 Supported options:
@@ -280,70 +298,68 @@ Supported options:
 * `noKey`: set `true` to return a url without an encryption key
 * `key`: only works for folders, encryption key, can be a string or buffer, 128 bit
 
-#### `.delete(permanent, callback)`
+#### `.unshare()` / `.unshareFolder()`
+
+Unshares files and folders. `.unshareFolder` only works for folders, `.unshare` works for both (but calls `.unshareFolder` internally).
+
+#### `.delete(permanent)`
 
 Delete file, permanently if `permanent` is true, otherwise file is moved to rubbish bin.
 
 ```js
-file.delete((err) => {
-  // file was moved to rubbish bin
-})
+// Moves the file to rubbish bin
+await file.delete()
+
+// Deletes the file permanently
+await file.delete(true)
 ```
 
-#### `.moveTo(target, callback)`
+#### `.moveTo(target)`
 
 Move a file to target, which can be a folder object or it's nodeId.
 
 ```js
-file.moveTo(storage.root, (err) => {
-  // file was moved to storage root
-})
+// Moves the file to storage root
+await file.moveTo(storage.root)
 ```
 
-#### `.setAttributes(attributes, callback)`
+#### `.setAttributes(attributes)`
 
 Set the the attributes of a object. Doesn't remove the current ones, but can overwrite those.
 
 ```js
-file.setAttributes({someAttribute: someValue}, (err) => {
-  // attribute was set
-})
+await file.setAttributes({someAttribute: someValue})
 ```
 
-#### `.uploadAttribute(type, [buffer|stream], [callback])`
+#### `.uploadAttribute(type, [buffer|stream])`
 
 Upload a thumbnail or preview image to the existent file. Fails if the node is a folder.
 
 The argument `type` can be a string (`thumbnail` or `preview`) or a integer (`0` and `1`).
 
-#### `.rename(newFileName, callback)`
+#### `.rename(newFileName)`
 
 Rename a file.
 
 ```javascript
-file.rename('hello-world.txt', (err) => {
-  // file was renamed
-})
+await file.rename('hello-world.txt')
 ```
 
-#### `.setLabel(label, callback)`
+#### `.setLabel(label)`
 
 Set file's label, where `label` can be a number between 0 and 7 or a valid label color the following: 'red', 'orange', 'yellow', 'green', 'blue', 'purple' and 'grey'.
 
 ```js
-file.setLabel('red', (err) => {
-  // file label is red now
-})
+await file.setLabel('red')
 ```
 
-#### `.setFavorite(isFavorite, callback)`
+#### `.setFavorite(isFavorite)`
 
 Set file as favorite is `isFavorite` is `true`
 
 ```js
-file.setFavorite(true, (err) => {
-  // file is now a favorite
-})
+await file.setFavorite(true)
+await file.setFavorite(false)
 ```
 
 ### Events
@@ -373,8 +389,10 @@ If the `fetch` function is overridden then the `userAgent`, httpAgent` and `http
 
 Returns the global API shared by `File` instances.
 
-<CodeBlockSwitchable language="js" code="import { API } from 'megajs'
-const api = API.getGlobalApi()" />
+```js node2deno-v1
+import { API } from 'megajs'
+const api = API.getGlobalApi()
+```
 
 Storage objects have their own API objects which can be accessed via `storage.api`. The API objects of File objects can be accessed via `file.api` and default to the global instance, but can be overridden to an API instance from a Storage to allow using account downloading limits.
 
@@ -382,13 +400,17 @@ Storage objects have their own API objects which can be accessed via `storage.ap
 
 The `verify` function accept a file key as argument creates a PassThrough stream that verifies the content received against the key.
 
-<CodeBlockSwitchable language="js" code="import { verify } from 'megajs'
+```js node2deno-v1
+import { verify } from 'megajs'
+
 const fileKey = 'example-file-key'
 const verifyFunction = verify(fileKey)
 const fileStream = getFileStreamSomehow()
 fileStream.pipe(verifyFunction)
+
 verifyFunction.on('end', () => console.log('File is valid'))
-verifyFunction.on('error', () => console.log('File is corrupted'))" />
+verifyFunction.on('error', () => console.log('File is corrupted'))
+```
 
 The file key follows the same rules as the `key` argument in the `File` constructor, so it can be a string (`https://mega.nz/file/...#THIS_PART_OF_THE_SHARE_LINK`), a Buffer or a Uint8Array.
 

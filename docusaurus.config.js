@@ -26,6 +26,7 @@ const config = {
           editUrl: 'https://github.com/qgustavor/mega-docs/tree/master/',
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
+            [require('./src/plugins/node2deno'), {}]
           ]
         },
         blog: false,

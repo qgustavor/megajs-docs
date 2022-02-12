@@ -40,6 +40,10 @@ File.defaultHandleRetries = (tries, error, cb) => {
 }
 ```
 
+## Methods now return promises
+
+Many methods in V0 returned `this`. While returning `this` is useful in some cases (as popularized by jQuery) because this library works asynchronously that's not so useful. Because of that now methods return promises which are more useful. Check if your code relies on the return value of the library methods (except by `MutableFile.prototype.upload()`, `File.prototype.download()` and `new Storage()`, those were kept the same).
+
 ## Streaming libraries were updated or replaced
 
 It should not cause many issues, but maybe can cause changes in library behavior in case you depended on some Streams1 behavior. It may make the library more responsive than before, after all, the main reason to update those libraries was to fix Deno support.

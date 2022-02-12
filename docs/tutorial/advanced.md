@@ -11,7 +11,7 @@ This library supports separating downloading/uploading from encryption steps. It
 If you want to download then decrypt, not the two at the same time, then do the following:
 
 ```js
-let file = File.fromURL(url)
+const file = File.fromURL(url)
 
 // Download it using cipher
 file.download({ cipher: true })
@@ -26,7 +26,7 @@ fs.readFileStream('filename.ext.enc')
 ## Encrypting then uploading
 
 ```js
-let encryptStream = encrypt()
+const encryptStream = encrypt()
 fs.readFileStream('filename.ext')
   .pipe(encryptStream)
   .pipe(fs.createWriteStream('filename.ext.enc'))
@@ -37,9 +37,9 @@ encryptStream.on('end', () => {
 })
 
 // Later upload the encrypted file
-let storage = new Storage(options, callback)
+const storage = new Storage(options, callback)
 
-// Wait for callback, then:
+await storage.ready
 storage.upload({
   uploadCiphertext: true,
   key: Buffer.from('key from console.log', 'hex')
@@ -51,9 +51,9 @@ storage.upload({
 Make MEGA work like any other file hosting service:
 
 ```js
-let storage = new Storage(options, callback)
+const storage = new Storage(options, callback)
+await storage.ready
 
-// Wait for callback, then:
 storage.upload({
   uploadCiphertext: true,
   // This key will be used to encrypt the attributes

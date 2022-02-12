@@ -6,12 +6,33 @@ sidebar_position: 3
 
 To log in to an account use the `Storage` class:
 
-import CodeBlockSwitchable from '@site/src/components/CodeBlockSwitchable'
-import codeExampleLogin from '!!raw-loader!./code-example-login.js'
+```js node2deno-v1
+import { Storage } from 'megajs'
 
-<CodeBlockSwitchable language="js" code={codeExampleLogin} version={1} />
+const storage = new Storage({
+  email: 'user@example.com',
+  password: 'correct horse battery example',
+  userAgent: 'ExampleClient/1.0'
+})
 
-It is recommended to set up an user-agent instead of using the library's default.
+// Will resolve once the user is logged in
+// or reject if some error happens
+await storage.ready
+```
+
+It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers (mostly Firefox).
+
+Events can still be used like in V0:
+
+```js
+storage.once('ready', () => {
+  // User is now logged in
+})
+
+storage.once('error', error => {
+  // Some error happened
+})
+```
 
 It may look weird to pass a callback to a constructor, but that's an option too:
 

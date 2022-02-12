@@ -17,10 +17,10 @@ const api = file.api // or storage.api
 
 The default API object used by the `File` class can be accessed via:
 
-import CodeBlockSwitchable from '@site/src/components/CodeBlockSwitchable'
-import codeExampleApi from '!!raw-loader!./code-example-api.js'
-
-<CodeBlockSwitchable language="js" code={codeExampleApi} version={1}  />
+```js node2deno-v1
+import { API } from 'megajs'
+const globalApi = API.getGlobalApi()
+```
 
 In V0 this library used the [request](https://www.npmjs.com/package/request) library, but now fetch is used and to make the library easier to use some shortcuts were added:
 

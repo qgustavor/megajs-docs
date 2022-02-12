@@ -10,10 +10,12 @@ If you are targeting Node or using a build tool, then you need to install the li
 npm install megajs@1
 ```
 
+Since V1 it already includes TypeScript types (thanks to [ChampionBuffalo1](https://github.com/ChampionBuffalo1) for contributing).
+
 If you are working directly from a browser or from Deno you can import the library using ES modules:
 
 ```js
-import { Storage } from 'https://unpkg.com/megajs@1/dist/main.browser-es.js'
+import { Storage } from 'https://cdn.skypack.dev/megajs@1?dts'
 ```
 
 You can also use `<script>` tags to load the UMD version:

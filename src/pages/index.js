@@ -39,30 +39,22 @@ const codeExampleUpload = `import { Storage } from 'megajs'
 const storage = new Storage({
   email: 'user@example.com',
   password: 'correct horse battery example'
-})
+}).ready
 
-storage.once('ready', () => {
-  storage.upload('hello-world.txt', 'Hello world!', (error, file) => {
-    if (error) return console.error('There was an error:', error)
-    console.log('The file was uploaded!', file)
-  })
-})
+const file = await storage.upload('hello-world.txt', 'Hello world!').complete
+console.log('The file was uploaded!', file)
 `
 
 const codeExampleDownload = `import { File } from 'megajs'
 
 const file = File.fromURL('https://mega.nz/file/example#example')
 
-file.loadAttributes(error => {
-  if (error) return console.error(error)
-  console.log(file.name) // file name
-  console.log(file.size) // file size in bytes
+await file.loadAttributes()
+console.log(file.name) // file name
+console.log(file.size) // file size in bytes
 
-  file.download((error, data) => {
-    if (error) return console.error(error)
-    console.log(data.toString()) // file contents
-  })
-})
+const data = await file.downloadBuffer()
+console.log(data.toString()) // file contents
 `
 
 export default function Home () {
@@ -82,7 +74,7 @@ export default function Home () {
                 <p>Finally you can call the <code>.upload()</code> method to upload files to your account.</p>
               </div>
               <div className="col col--8">
-                <CodeBlockSwitchable language="js" code={codeExampleUpload} version={1} />
+                <CodeBlockSwitchable language="js" code={codeExampleUpload} version="1" />
               </div>
             </div>
           </div>
@@ -95,10 +87,10 @@ export default function Home () {
                 <h2>Downloading files</h2>
                 <p>To download shared files then you first open a file object using the <code>File.fromURL()</code> method.</p>
                 <p>Then you load file attributes such as name and size using <code>.loadAttributes()</code>.</p>
-                <p>Finally use the <code>.download()</code> method to download the file which will return a Buffer with the file contents.</p>
+                <p>Finally use the <code>.downloadBuffer()</code> method to download the file which will return a Buffer with the file contents.</p>
               </div>
               <div className="col col--8">
-                <CodeBlockSwitchable language="js" code={codeExampleDownload} version={1}  />
+                <CodeBlockSwitchable language="js" code={codeExampleDownload} version="1"  />
               </div>
             </div>
           </div>

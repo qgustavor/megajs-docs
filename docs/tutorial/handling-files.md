@@ -7,10 +7,15 @@ sidebar_position: 5
 To share a file you call `.link()` on the file object you got when uploading:
 
 ```js
+// Using promises
+const link = await file.link()
+
+// It will log something like https://mega.nz/file/example#example
+console.log(link)
+
+// Using callbacks
 file.link((error, link) => {
   if (error) console.error(error)
-
-  // It will log something like https://mega.nz/file/example#example
   console.log(link)
 })
 ```
@@ -21,7 +26,7 @@ You can also share files in your account like this:
 // storage is the new Storage() class from the login tutorial
 
 // It will share the first file in the root folder of the account 
-storage.root.children[0].link(callback)
+storage.root.children[0].link()
 ```
 
 To access files in Storage class you can use `.root` to access the root folder then `.children` to list its children, which are also `File` objects.
@@ -43,23 +48,31 @@ Folders are also listed in `storage.files` and in `.children`, as folders are al
 Those differences aside they can be manipulated like other files:
 
 ```js
-fileORFolder.link(callback) // shares files and folders
-fileORFolder.rename(newName, callback) // renames files and folders
-fileORFolder.moveTo(someFolder, callback) // moves files and folders
-fileORFolder.setFavorite(true, callback) // marks files and folders as favorites
-fileORFolder.delete(callback) // moves files and folders to the trash
-fileORFolder.delete(true, callback) // delete files and folders permanently 
+fileORFolder.link() // shares files and folders
+fileORFolder.unshare() // unshares files and folders
+fileORFolder.rename(newName) // renames files and folders
+fileORFolder.moveTo(someFolder) // moves files and folders
+fileORFolder.setFavorite(true) // marks files and folders as favorites
+fileORFolder.delete() // moves files and folders to the trash
+fileORFolder.delete(true) // delete files and folders permanently 
 ```
+
+Those functions return promises and also accept callbacks.
 
 While you cannot download folders, they can upload files on then like you can in the root folder:
 
 ```js
-folder.upload('hello-world.txt', 'Hello World!', callback)
+await folder.upload('hello-world.txt', 'Hello World!').complete
 ```
 
 You can also create new folders:
 
 ```js
+// Using promises
+const folder = await folder.mkdir('New Folder')
+console.log(folder)
+
+// Using callbacks
 folder.mkdir('New Folder', (error, folder) {
   if (error) console.error(error)
   console.log(folder)

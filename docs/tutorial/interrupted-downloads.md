@@ -27,9 +27,39 @@ The above example assume a Node.js environment, in other environments you might 
 
 Interrupted downloads are not checked due to limitations on Mega's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
 
-import CodeBlockSwitchable from '@site/src/components/CodeBlockSwitchable'
-import codeExampleVerify from '!!raw-loader!./code-example-verify.js'
+```js node2deno-v1
+import { File, verify } from 'megajs'
 
-<CodeBlockSwitchable language="js" code={codeExampleVerify} version={1}  />
+// node2deno:if-node
+// Get a file read stream. In Node fs.createReadStream can be used:
+// node2deno:if-deno
+// Get a file read stream. In Deno.open can be used:
+// node2deno:if-node
+const readStream = fs.createReadStream(filename)
+// node2deno:if-deno
+const readStream = new Response(await Deno.open(filename)).body
+
+const file = File.fromURL(url)
+const verifyStream = verify(file.key)
+
+verifyStream.on('error', error => {
+  // File is corrupted
+})
+
+verifyStream.on('end', error => {
+  // File is OK
+})
+
+// node2deno:if-node
+readStream.pipe(verifyStream)
+// node2deno:if-deno
+for await (const data of readStream) {
+// node2deno:if-deno
+  verifyStream.write(data)
+// node2deno:if-deno
+}
+// node2deno:if-deno
+verifyStream.end()
+```
 
 The last part of the tutorial is changing network settings.
