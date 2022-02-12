@@ -15,8 +15,10 @@ Since V1 it already includes TypeScript types (thanks to [ChampionBuffalo1](http
 If you are working directly from a browser or from Deno you can import the library using ES modules:
 
 ```js
-import { Storage } from 'https://cdn.skypack.dev/megajs@1?dts'
+import { Storage } from 'https://cdn.skypack.dev/megajs@1'
 ```
+
+Skypack supports `?dts` to provide type declarations, which [would be useful in Deno](https://deno.land/manual@v1.18.2/typescript/types) but currently is not working due to types depending on `@types/node` which don't work in Deno. If you have a solution for this issue, please send a pull request.
 
 You can also use `<script>` tags to load the UMD version:
 
@@ -33,6 +35,5 @@ You can also download the above files into your server instead of loading those 
 Remember to import the browser version when targeting the browser environment, even when using build tools, as it includes browser-compatible cryptographic functions instead of depending on [the Node crypto module](https://nodejs.org/api/crypto.html). Trying to use a browser port of Node crypto like [crypto-browserify](https://www.npmjs.com/package/crypto-browserify) can result in huge build sizes and hurt performance.
 
 :::
-
 
 In the next part of this tutorial we will login to a Mega account using the `Storage` class loaded above.

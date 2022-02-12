@@ -27,7 +27,7 @@ export default function CodeBlockSwitchable (props) {
       return e
     },
     e => e
-      .replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs@${version}?dts'`)
+      .replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs@${version}'`)
       .replace(/\/\/ node2deno:if-node\n.*\n/g, '')
       .replace(/\/\/ node2deno:if-deno\n/g, '')
   ]
