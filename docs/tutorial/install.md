@@ -15,10 +15,11 @@ Since V1 it already includes TypeScript types (thanks to [ChampionBuffalo1](http
 If you are working directly from a browser or from Deno you can import the library using ES modules:
 
 ```js
+// @deno-types="https://cdn.skypack.dev/megajs@1/types/es.d.ts"
 import { Storage } from 'https://cdn.skypack.dev/megajs@1'
 ```
 
-Skypack supports `?dts` to provide type declarations, which [would be useful in Deno](https://deno.land/manual@v1.18.2/typescript/types) but currently is not working due to types depending on `@types/node` which don't work in Deno. If you have a solution for this issue, please send a pull request.
+Skypack supports `?dts` to provide type declarations but it will return Node types which are not compatible with Deno. That's why you need to use `@deno-types` to load the correct type declarations.
 
 You can also use `<script>` tags to load the UMD version:
 
