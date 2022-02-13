@@ -28,7 +28,9 @@ The above example assume a Node.js environment, in other environments you might 
 Interrupted downloads are not checked due to limitations on Mega's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
 
 ```js node2deno-v1
+// node2deno:if-deno
 import { File, verify } from 'megajs'
+import { iterateReader } from 'https://cdn.deno.land/std/versions/0.125.0/raw/streams/conversion.ts'
 
 // node2deno:if-node
 // Get a file read stream. In Node fs.createReadStream can be used:
@@ -37,7 +39,7 @@ import { File, verify } from 'megajs'
 // node2deno:if-node
 const readStream = fs.createReadStream(filename)
 // node2deno:if-deno
-const readStream = new Response(await Deno.open(filename)).body
+const readStream = iterateReader(await Deno.open(filename))
 
 const file = File.fromURL(url)
 const verifyStream = verify(file.key)
