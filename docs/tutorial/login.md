@@ -71,6 +71,8 @@ const storage = mega({
 
 But this pattern might not be supported in future versions because it is not compatible with ES modules and causes issues with tree shaking, which is important when this using this library in a browser environment.
 
+If you try to import the library using `import mega from 'megajs'` it will throw the following error: `SyntaxError: The requested module 'megajs' does not provide an export named 'default'`. Notice that, at the moment, Visual Studio Code will load CJS types - which still support this pattern - instead of ESM types even when using `import` instead of `require` and, because of that, it will not warn about this issue.
+
 :::
 
 In the next part of this tutorial we will use the `storage` object to upload a file.
