@@ -83,7 +83,7 @@ uploadStream.on('error', error) => {
 })
 ```
 
-After uploading you will get a `File` object either via the callback or the `complete` event.
+After uploading you will get a `File` object either via the callback or the `complete` event. If you opt to use `.on('error')` then it will take precedence and neither the `.complete` promise nor the callback will throw errors.
 
 Because network connections can be unstable sometimes this library retries on errors up to eight times. You can change this behavior by providing a retry handling function to `upload()`:
 
@@ -103,5 +103,11 @@ const file = await storage.upload({
 
 console.log('The file was uploaded!', file)
 ```
+
+:::info
+
+The library will override buffers passed to it. If you need to reuse those buffers clone those using `Buffer.from()` before passing them to the library.
+
+:::
 
 In the next part of this tutorial we will share this file and do other operations on it.

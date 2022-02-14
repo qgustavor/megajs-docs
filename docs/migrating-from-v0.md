@@ -40,9 +40,13 @@ File.defaultHandleRetries = (tries, error, cb) => {
 }
 ```
 
+## Code uses modern JavaScript
+
+Code is not being compiled down to ES5 anymore. It would require Babel and it is slow. If you target older browsers run the code thought Babel.
+
 ## Methods now return promises
 
-Many methods in V0 returned `this`. While returning `this` is useful in some cases (as popularized by jQuery) because this library works asynchronously that's not so useful. Because of that now methods return promises which are more useful. Check if your code relies on the return value of the library methods (except by `MutableFile.prototype.upload()`, `File.prototype.download()` and `new Storage()`, those were kept the same).
+Many methods in V0 returned `this`. While returning `this` is useful in some cases (as popularized by jQuery) because this library works asynchronously that's not so useful. Because of that now methods return promises which are more useful. Check if your code relies on the return value of the library methods (except by `MutableFile.prototype.upload()`, `File.prototype.download()` and `new Storage()`, those were kept the same). Also, because of that, promise support is now required, even when using callbacks, since promises are used internally.
 
 ## Some functions throw errors synchronously
 
