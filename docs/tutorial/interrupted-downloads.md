@@ -28,8 +28,8 @@ The above example assume a Node.js environment, in other environments you might 
 Interrupted downloads are not checked due to limitations on Mega's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
 
 ```js node2deno-v1
-// node2deno:if-deno
 import { File, verify } from 'megajs'
+// node2deno:if-deno
 import { iterateReader } from 'https://cdn.deno.land/std/versions/0.125.0/raw/streams/conversion.ts'
 
 // node2deno:if-node
