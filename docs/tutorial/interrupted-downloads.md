@@ -29,15 +29,17 @@ Interrupted downloads are not checked due to limitations on Mega's MAC verificat
 
 ```js node2deno-v1
 import { File, verify } from 'megajs'
+// node2deno:if-node
+import { createReadStream } from 'node:fs'
 // node2deno:if-deno
 import { iterateReader } from 'https://cdn.deno.land/std/versions/0.125.0/raw/streams/conversion.ts'
 
 // node2deno:if-node
-// Get a file read stream. In Node fs.createReadStream can be used:
+// Get a file read stream. createReadStream can be used:
 // node2deno:if-deno
-// Get a file read stream. In Deno.open can be used:
+// Get a file read stream. Deno.open and iterateReader can be used:
 // node2deno:if-node
-const readStream = fs.createReadStream(filename)
+const readStream = createReadStream(filename)
 // node2deno:if-deno
 const readStream = iterateReader(await Deno.open(filename))
 
@@ -48,7 +50,7 @@ verifyStream.on('error', error => {
   // File is corrupted
 })
 
-verifyStream.on('end', error => {
+verifyStream.on('end', () => {
   // File is OK
 })
 
