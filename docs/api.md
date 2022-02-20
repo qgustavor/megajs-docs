@@ -104,6 +104,8 @@ const fileFromUrl = File.fromURL(url)
 const fileFromObject = new File({ downloadId, key })
 ```
 
+To avoid collisions with [the global `File` object](https://developer.mozilla.org/en-US/docs/Web/API/File) you can use `import { File as MegaFile } from 'megajs'` or `const { File: MegaFile } = require('megajs')` and use `MegaFile` instead of `File`.
+
 ### Options
 
 If a string is passed it needs to be a shared Mega URL. It can be a `https://mega.co.nz` or a `https://mega.nz` file. The new URL format with `/file/` or `/folder/` is also supported.
