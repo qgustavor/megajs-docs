@@ -24,7 +24,7 @@ The exported classes and functions are those below:
 
 ## Storage
 
-Creates a logged in connection instance to Mega.
+Creates a logged in connection instance to MEGA.
 
 ### Creation
 
@@ -38,7 +38,7 @@ const storage = new Storage(options, [callback])
 * `email` - User login email **required**.
 * `password` - User password **required**.
 * `keepalive` - Keep connection open to receive server-to-client requests that will be mapped to events. Defaults to `true`.
-* `autologin` - Logins to Mega. Defaults to `true`. Set to `false` if you want to change request options, like proxy, [like shown here](tutorial/advanced.md#setting-request-configuration).
+* `autologin` - Logins to MEGA. Defaults to `true`. Set to `false` if you want to change request options, like proxy, [like shown here](tutorial/advanced.md#setting-request-configuration).
 * `autoload` - Load in file structure. Defaults to `true`.
 * `api` - an API object.
 * All arguments supported by the API class (in case an API object is not provided).
@@ -69,7 +69,7 @@ Reloads files tree. No need to call this if `autoload` is used.
 
 #### `.login()`
 
-Logins to Mega. No need to call this if `autologin` is used.
+Logins to MEGA. No need to call this if `autologin` is used.
 
 #### `.getAccountInfo()`
 
@@ -104,11 +104,11 @@ const fileFromUrl = File.fromURL(url)
 const fileFromObject = new File({ downloadId, key })
 ```
 
-To avoid collisions with [the global `File` object](https://developer.mozilla.org/en-US/docs/Web/API/File) you can use `import { File as MegaFile } from 'megajs'` or `const { File: MegaFile } = require('megajs')` and use `MegaFile` instead of `File`.
+To avoid collisions with [the global `File` object](https://developer.mozilla.org/en-US/docs/Web/API/File) you can use `import { File as MEGAFile } from 'megajs'` or `const { File: MEGAFile } = require('megajs')` and use `MEGAFile` instead of `File`.
 
 ### Options
 
-If a string is passed it needs to be a shared Mega URL. It can be a `https://mega.co.nz` or a `https://mega.nz` file. The new URL format with `/file/` or `/folder/` is also supported.
+If a string is passed it needs to be a shared MEGA URL. It can be a `https://mega.co.nz` or a `https://mega.nz` file. The new URL format with `/file/` or `/folder/` is also supported.
 
 If an object is passed it needs to have the options below:
 
@@ -164,7 +164,7 @@ file.download((err, data) => {
 })
 ```
 
-This function downloads files using chunked multiple parallel connections to speed up downloading. Similar to the Mega implementation it first loads a 128KB chunk, then a 256KB, increasing it until it reaches 1MB. You can use the options below to control that.
+This function downloads files using chunked multiple parallel connections to speed up downloading. Similar to the MEGA implementation it first loads a 128KB chunk, then a 256KB, increasing it until it reaches 1MB. You can use the options below to control that.
 
 * `maxConnections`: the number of parallel connections is defined (default: 4);
 * `initialChunkSize`: first chunk size, in bytes (default: 128KB);
@@ -259,7 +259,7 @@ To handle upload completion or errors you can:
 * `handleRetries`: accepts a function to handle retries on chunk downloading errors, overrides the function defined by `File.defaultHandleRetries`;
 * `forceHttps`: if set to `true` will upload using HTTPS, if set to `false` will upload using HTTP. Default to `false` in the Node build and `true` in the browser/Deno build. Set to `false` if you are having TLS errors;
 
-Thumbnail images are 120px x 120px JPEG images with 70% quality. Preview images are JPEG images with a maximum width and height size of 1000px and 75% quality. Please use those settings to avoid breaking compatibility with other Mega clients. This library don't generates neither preview or thumbnail images, only provides a way to uploading those.
+Thumbnail images are 120px x 120px JPEG images with 70% quality. Preview images are JPEG images with a maximum width and height size of 1000px and 75% quality. Please use those settings to avoid breaking compatibility with other MEGA clients. This library don't generates neither preview or thumbnail images, only provides a way to uploading those.
 
 Uploading data without encryption is supported and [is documented here](tutorial/advanced.md#uploading-without-encryption).
 
@@ -380,7 +380,7 @@ The API class handles API connections, which includes part of the logged state, 
 
 ### Properties
 
-* `gateway` - the gateway used to connect to Mega's API, defaults to `https://g.api.mega.co.nz/`.
+* `gateway` - the gateway used to connect to MEGA's API, defaults to `https://g.api.mega.co.nz/`.
 * `userAgent` - the user-agent used when connecting, defaults to `megajs/{version}`.
 * `httpAgent` and `httpsAgent` - the HTTP(S) agents used in Node, can be overriden to enable proxying;
 * `fetch` - the fetch function used by library, defaults to `node-fetch` in Node and `globalThis.fetch` in other environments;

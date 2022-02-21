@@ -8,4 +8,4 @@ The most common usage of this library - at least as found in GitHub - is uploadi
 
 This tutorial will guide you how to use most of the features of this library.
 
-You can follow some of those examples in a browser. There are not any live examples because those examples need an Mega account and, while this tutorial could prompt you to give your account credentials, is better to avoid that to improve security.
+You can follow some of those examples in a browser. There are not any live examples because those examples need an MEGA account and, while this tutorial could prompt you to give your account credentials, is better to avoid that to improve security.

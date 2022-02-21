@@ -25,7 +25,7 @@ file.loadAttributes(error => {
 
 The above example assume a Node.js environment, in other environments you might need to convert the Node stream returned by `download` to the way file streaming is handled in this environment (like Deno's `Deno.open`).
 
-Interrupted downloads are not checked due to limitations on Mega's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
+Interrupted downloads are not checked due to limitations on MEGA's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
 
 ```js node2deno-v1
 import { File, verify } from 'megajs'

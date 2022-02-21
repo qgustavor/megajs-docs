@@ -39,4 +39,4 @@ Deno is not supported in 0.17.2, but it's supported in 1.0.
 :::
 
 
-In the next part of this tutorial we will login to a Mega account using the `Storage` class loaded above.
+In the next part of this tutorial we will login to a MEGA account using the `Storage` class loaded above.

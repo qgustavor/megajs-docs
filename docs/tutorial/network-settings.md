@@ -35,7 +35,7 @@ api.httpsAgent
 
 Those agents can be replaced in order if you need to use a proxy. Keep in mind that you need to use an agent that supports `keep-alive`.
 
-You can replace the Mega gateway, which is useful when testing to point to a mock server:
+You can replace the MEGA gateway, which is useful when testing to point to a mock server:
 
 ```js
 api.gateway // default: https://g.api.mega.co.nz/

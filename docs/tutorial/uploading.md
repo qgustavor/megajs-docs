@@ -54,7 +54,7 @@ console.log('The file was uploaded!', file)
 
 :::info
 
-Mega requires the file size when uploading. If you don't know the file size the only way to workaround that is buffering the entire stream in memory, which will cause issues when uploading large files. It used to be allowed by default in V0, but because is quite easy to forget this behavior it is not allowed anymore. Either set the size or explicitly enable buffering by setting `allowUploadBuffering` to `true`.
+MEGA requires the file size when uploading. If you don't know the file size the only way to workaround that is buffering the entire stream in memory, which will cause issues when uploading large files. It used to be allowed by default in V0, but because is quite easy to forget this behavior it is not allowed anymore. Either set the size or explicitly enable buffering by setting `allowUploadBuffering` to `true`.
 
 :::
 

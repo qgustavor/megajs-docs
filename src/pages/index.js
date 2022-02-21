@@ -69,7 +69,7 @@ export default function Home () {
             <div className="row">
               <div className="col col--4">
                 <h2>Quick start</h2>
-                <p>To upload files to <a href="https://mega.nz/">Mega</a> import the library using either ES modules or CommonJS.</p>
+                <p>To upload files to <a href="https://mega.nz/">MEGA</a> import the library using either ES modules or CommonJS.</p>
                 <p>Then create a storage object to login using your e-mail and password, then wait for the "ready" event.</p>
                 <p>Finally you can call the <code>.upload()</code> method to upload files to your account.</p>
               </div>
@@ -116,7 +116,7 @@ export default function Home () {
                 <ul>
                   <li>This is based on <a href="https://github.com/tonistiigi/mega">tonistiigi's mega library</a>.</li>
                   <li>This is all unofficial, based on <a href="https://mega.nz/#developers">developer guide</a> and site source.</li>
-                  <li>Make sure you agree with Mega's <a href="https://mega.nz/#terms">Terms of Service</a> before using it.</li>
+                  <li>Make sure you agree with MEGA's <a href="https://mega.nz/#terms">Terms of Service</a> before using it.</li>
                 </ul>
               </div>
             </div>

@@ -58,7 +58,7 @@ folder.loadAttributes(error => {
 })
 ```
 
-When opening shared folders in Mega you can right-click some file and get a file pointing to a specific file in the folder. This library recognizes those kind of links and allow loading the file specified. To make it work get the file from the second argument in the `loadAttributes` callback, like this:
+When opening shared folders in MEGA you can right-click some file and get a file pointing to a specific file in the folder. This library recognizes those kind of links and allow loading the file specified. To make it work get the file from the second argument in the `loadAttributes` callback, like this:
 
 ```js
 // Get the folder object from the URL

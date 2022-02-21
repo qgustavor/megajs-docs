@@ -9,7 +9,7 @@ export default function TagLine () {
   useEffect(() => {
     // Fallback for older browsers
     if (!el.current.animate) {
-      el.current.textContent = 'Unofficial JavaScript SDK for Mega'
+      el.current.textContent = 'Unofficial JavaScript SDK for MEGA'
       return
     }
 
@@ -22,7 +22,7 @@ export default function TagLine () {
     const suffixEl = document.createElement('div')
     prefixEl.textContent = 'Unofficial'
     middleEl.textContent = currentWord
-    suffixEl.textContent = 'SDK for Mega'
+    suffixEl.textContent = 'SDK for MEGA'
 
     el.current.appendChild(prefixEl)
     el.current.appendChild(middleEl)
