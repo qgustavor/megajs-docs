@@ -64,7 +64,7 @@ const sharedFile = File.fromURL(url, {
 // Now downloading the shared file will use the limits from that account
 ```
 
-Finally all those properties of the `API` class can also be provided as `Storage` and `File` arguments:
+Finally the properties of the `API` class can also be provided as `Storage` arguments:
 
 ```js
 const storage = new Storage({
