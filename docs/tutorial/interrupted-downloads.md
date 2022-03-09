@@ -66,4 +66,10 @@ for await (const data of readStream) {
 verifyStream.end()
 ```
 
+Here is a browser implementation:
+
+import CodepenEmbed from '@site/src/components/CodepenEmbed'
+
+<CodepenEmbed user="qgustavor" hash="wvPNNeb" height="500" />
+
 The last part of the tutorial is changing network settings.
