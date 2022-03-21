@@ -1,6 +1,15 @@
 import React from 'react'
+import BrowserOnly from '@docusaurus/BrowserOnly'
 
-export default function CodepenEmbed (props) {
+export default function CodepenEmbedWrapper (props) {
+  return (
+    <BrowserOnly fallback={<p>Loading...</p>}>
+      {() => <CodepenEmbed {...props} />}
+    </BrowserOnly>
+  )
+}
+
+function CodepenEmbed (props) {
   if (window.__CPEmbed) {
     setTimeout(() => window.__CPEmbed(), 100)
   } else {
