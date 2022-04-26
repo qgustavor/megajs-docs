@@ -18,7 +18,7 @@ import { Storage } from 'https://unpkg.com/megajs@0/dist/main.browser-es.js'
 
 You can also use `<script>` tags to load the UMD version:
 
-```js
+```html
 <script src="https://unpkg.com/megajs@0/dist/main.browser-umd.js"></script>
 ```
 

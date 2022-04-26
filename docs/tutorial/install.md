@@ -23,7 +23,7 @@ Skypack supports `?dts` to provide type declarations but it will return Node typ
 
 You can also use `<script>` tags to load the UMD version:
 
-```js
+```html
 <script src="https://unpkg.com/megajs@1/dist/main.browser-umd.js"></script>
 ```
 
