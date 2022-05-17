@@ -19,7 +19,7 @@ export default function CodeBlockSwitchable (props) {
       if (e.includes('await ')) {
         e = e
           .replace(/^(?!import|$)/gm, '  ')
-          .replace(/^\s*$/m, "\n// Node don't support top-level await when using CJS\n;(async function () {")
+          .replace(/^\s*$/m, "\n// Node doesn't support top-level await when using CJS\n;(async function () {")
           .replace(/\n*$/, '\n}()).catch(error => {\n  console.error(error)\n  process.exit(1)\n})\n')
       }
       e = e
