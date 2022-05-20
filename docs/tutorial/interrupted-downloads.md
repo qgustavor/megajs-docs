@@ -8,19 +8,17 @@ If a download gets interrupted - because connection issues or user action - you 
 
 ```js
 const file = File.fromURL(url)
-file.loadAttributes(error => {
-  if (error) return console.error(error)
+await file.loadAttributes()
 
-  const start = fs.statSync(file.name).size
-  const downloadStream = file.download({ start })
+const start = fs.statSync(file.name).size
+const downloadStream = file.download({ start })
 
-  const writableStream = fs.createWriteStream(filename, {
-    flags: 'r+', // <= set flags to prevent overwriting the file
-    start
-  })
-
-  downloadStream.pipe(writableStream)
+const writableStream = fs.createWriteStream(filename, {
+  flags: 'r+', // <= set flags to prevent overwriting the file
+  start
 })
+
+downloadStream.pipe(writableStream)
 ```
 
 The above example assume a Node.js environment, in other environments you might need to convert the Node stream returned by `download` to the way file streaming is handled in this environment (like Deno's `Deno.open`).
