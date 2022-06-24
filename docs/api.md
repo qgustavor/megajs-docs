@@ -381,11 +381,13 @@ The API class handles API connections, which includes part of the logged state, 
 ### Properties
 
 * `gateway` - the gateway used to connect to MEGA's API, defaults to `https://g.api.mega.co.nz/`.
-* `userAgent` - the user-agent used when connecting, defaults to `megajs/{version}`.
+* `userAgent` - the user-agent used when connecting.
 * `httpAgent` and `httpsAgent` - the HTTP(S) agents used in Node, can be overriden to enable proxying;
 * `fetch` - the fetch function used by library, defaults to `node-fetch` in Node and `globalThis.fetch` in other environments;
 
 If the `fetch` function is overridden then the `userAgent`, httpAgent` and `httpsAgent` properties will be ignored.
+
+It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (i.e. Firefox).
 
 ### Static functions
 
