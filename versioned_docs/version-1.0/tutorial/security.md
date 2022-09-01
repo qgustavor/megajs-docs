@@ -10,7 +10,7 @@ MEGA is primarily a file hosting website that uses end-to-end cryptography, but 
 
 Because MEGA uses end-to-end cryptography the server cannot detect if a client is leaking keys or using weak crypto. There was in the past at least one popular third-party MEGA client that failed to generate secure cryptographic keys, hurting security and privacy. This library tries to be safe by [secure-random](https://www.npmjs.com/package/secure-random) for key generation and by testing cryptographic functions.
 
-To avoid this issue do not set a `key` while updating unless you have a really good reason for so (example: the code that tests the `Storage` class uses a fixed key because them the results are deterministic).
+To avoid this issue do not set a `key` while uploading or creating folders and let the library generate a random key unless you have a really good reason for so (example: the code that tests the `Storage` class uses a fixed key because them the results are deterministic).
 
 ## Logged sessions are not safe when used in web pages
 
@@ -22,7 +22,7 @@ In other words: avoid using the `Storage` class in a web page.
 
 In order to reduce CPU usage MEGA's official and most third-party clients do not use HTTPS when transferring encrypted data. While the encryption help protect privacy, because encrypted files, unlike HTTPS, use static keys, it's less secure than using HTTPS. While it protects the data from being decrypted, after the data or the key is known this default behavior allows anyone that can listen to network traffic to know if someone downloaded this data. It gets worse when bugged clients are used, as some use weak encryption keys.
 
-To mitigate this issue this library allows forcing HTTPS when downloading and uploading by setting `forceHttps` to true. In the other hand, sometimes forcing HTTPS result connections being dropped as MEGA insists that HTTPS should not be used when possible to save server resources.
+To mitigate this issue this library allows forcing HTTPS when downloading and uploading by setting `forceHttps` to `true`. In the other hand, sometimes forcing HTTPS result connections being dropped as MEGA insists that HTTPS should not be used when possible to save server resources.
 
 ## File integrity can only be checked after the entire file is downloaded
 
@@ -46,4 +46,4 @@ E-mails cannot be encrypted because the server needs it to login and replacing e
 
 File dates are not encrypted and encrypting those would be useless as the server could log those anyway. Which files and folders are shared are known to the server otherwise how could it make those accessible to other users? File sizes are known to the server as those are hard to hide from the server. If you wish you can try to obfuscate those by adding paddings, but them it will waste your storage size.
 
-File hierarchy is known to the server. Looks like it makes implementing the service simpler. In the other hand you can just upload everything to `storage.root` and use `folder name/file name.txt` as file names if you wish (this library do not enforce restrictions on file names, unlike official clients).
+File hierarchy is known to the server. Looks like it makes implementing the service simpler. In the other hand you can just upload everything to `storage.root` and use `folder name/file name.txt` as file names if you wish (this library do not enforce character restrictions on file names, unlike official clients, it only requires file names to not be empty).
