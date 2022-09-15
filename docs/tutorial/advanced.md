@@ -48,6 +48,12 @@ storage.upload({
 
 ## Uploading without encryption
 
+:::caution
+
+This code does not work anymore due to changes in MEGA. For more info [check this discussion](https://github.com/qgustavor/mega/discussions/108).
+
+:::
+
 Make MEGA work like any other file hosting service:
 
 ```js
