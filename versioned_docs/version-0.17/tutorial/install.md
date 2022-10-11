@@ -16,6 +16,8 @@ If you are working directly from a browser you can import the library using ES m
 import { Storage } from 'https://unpkg.com/megajs@0/dist/main.browser-es.js'
 ```
 
+Note that it will load the latest v0 version, instead remember to update to URL to point to a specific version to reduce the chances of the code breaking if a new version gets released.
+
 You can also use `<script>` tags to load the UMD version:
 
 ```html

@@ -19,6 +19,8 @@ If you are working directly from a browser or from Deno you can import the libra
 import { Storage } from 'https://cdn.skypack.dev/megajs@1'
 ```
 
+Note that it will load the latest v1 version, instead remember to update to URL to point to a specific version to reduce the chances of the code breaking when a new version gets released.
+
 Skypack supports `?dts` to provide type declarations but it will return Node types which are not compatible with Deno. That's why you need to use `@deno-types` to load the correct type declarations. You will also need to run Deno with `--allow-net` or `--prompt` because MEGA use multiple domains and Deno still not support something like `--allow-net=*.mega.co.nz` (the API still uses `.co.nz`, not `.nz`).
 
 You can also use `<script>` tags to load the UMD version:
