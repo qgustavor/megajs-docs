@@ -13,7 +13,7 @@ export default function TagLine () {
       return
     }
 
-    const originalWords = ['Node.js', 'Deno', 'Browser', 'TypeScript', 'JavaScript']
+    const originalWords = ['Node.js', 'Browser', 'TypeScript', 'JavaScript']
     let words = originalWords.slice()
     let currentWord = ''
 

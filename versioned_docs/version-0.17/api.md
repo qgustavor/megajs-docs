@@ -111,7 +111,7 @@ If an object is passed it needs to have the options below:
 * `directory` - Boolean if file is directory.
 * `children` - Array of files for directories.
 
-Values marked with \* are `null` or `undefined` when an encryption key isn't specified.
+Values marked with \* are `null` or `undefined` when an encryption key isn't specified. An encryption key isn't specified when someone loads a shared file without specifying the encryption key like `File.fromURL('https://mega.nz/file/something')` without the `#random-string` part. Files loaded from accounts always have keys defined.
 
 ### Methods
 

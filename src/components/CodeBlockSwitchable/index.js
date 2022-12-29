@@ -7,7 +7,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 export default function CodeBlockSwitchable (props) {
   const version = props.version || '0'
   const majorVersion = parseInt(version.split('.')[0])
-  const modes = [ 'Node ESM', 'Node CJS', majorVersion > 0 ? 'Browser/Deno' : 'Browser' ]
+  const modes = [ 'Node ESM', 'Node CJS', majorVersion > 0 ? 'Browser' : 'Browser' ]
   const replacementFns = [
     e => e
       .replace(/\/\/ node2deno:if-deno\n.*\n?/g, '')
@@ -27,7 +27,6 @@ export default function CodeBlockSwitchable (props) {
       return e
     },
     e => e
-      .replace(/import (.+?) from 'megajs'/g, `// @deno-types="https://cdn.skypack.dev/megajs@${version}/types/es.d.ts"\nimport $1 from 'https://cdn.skypack.dev/megajs@${version}'`)
       .replace(/\/\/ node2deno:if-node\n.*\n/g, '')
       .replace(/\/\/ node2deno:if-deno\n/g, '')
   ]
