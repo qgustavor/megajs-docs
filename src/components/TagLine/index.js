@@ -35,7 +35,7 @@ export default function TagLine () {
 
     async function animationLoop () {
       if (words.length === 0) {
-        await wait(15e3)
+        await wait(5000)
         words = originalWords.slice()
       }
       const newWord = currentWord
@@ -62,17 +62,19 @@ export default function TagLine () {
       if (!newWord) middleEl.textContent = currentWord
       currentWord = newWord
 
-      prefixEl.animate([{
-        transformOrigin: 'top left',
-        transform: `translateX(${prefixDelta}px)`
-      }, {
-        transformOrigin: 'top left',
-        transform: 'none'
-      }], {
-        duration: 300,
-        easing: 'ease-in-out',
-        fill: 'both'
-      })
+      if (currentWord) {
+        prefixEl.animate([{
+          transformOrigin: 'top left',
+          transform: `translateX(${prefixDelta}px)`
+        }, {
+          transformOrigin: 'top left',
+          transform: 'none'
+        }], {
+          duration: 300,
+          easing: 'ease-out',
+          fill: 'both'
+        })
+      }
       middleEl.animate([{
         transformOrigin: 'top center',
         transform: newWord ? 'perspective(7em) rotateY(-90deg)' : 'none'
@@ -81,22 +83,24 @@ export default function TagLine () {
         transform: newWord ? 'none' : 'perspective(7em) rotateY(90deg)'
       }], {
         duration: 300,
-        easing: 'ease-in-out',
+        easing: 'linear',
         fill: 'both'
       })
-      suffixEl.animate([{
-        transformOrigin: 'top left',
-        transform: `translateX(${suffixDelta}px)`
-      }, {
-        transformOrigin: 'top left',
-        transform: 'none'
-      }], {
-        duration: 300,
-        easing: 'ease-in-out',
-        fill: 'both'
-      })
+      if (currentWord) {
+        suffixEl.animate([{
+          transformOrigin: 'top left',
+          transform: `translateX(${suffixDelta}px)`
+        }, {
+          transformOrigin: 'top left',
+          transform: 'none'
+        }], {
+          duration: 300,
+          easing: 'ease-out',
+          fill: 'both'
+        })
+      }
 
-      await wait(currentWord ? 3000 : 300)
+      await wait(currentWord ? 2500 : 300)
       animationLoop()
     }
     animationLoop()
