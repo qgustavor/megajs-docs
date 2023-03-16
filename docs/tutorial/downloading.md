@@ -38,6 +38,22 @@ stream.on('data', data => console.log(data))
 
 Those are useful when dealing with huge files as `.downloadBuffer()` stores the entire file in memory. In the other hand, because of that, `.download()` can't return a promise. Also, you can still use callbacks with `.download()` like in V0.
 
+You can get progress events from the `progress` event like this:
+
+```js
+const stream = file.download()
+stream.on('progress', info => {
+  console.log('Loaded', info.bytesLoaded, 'bytes of', info.bytesTotal)
+})
+```
+
+In order to render the values returned by the `progress` event you have many options:
+
+* For browsers you can use [the `<progress>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) or libraries such as [progressbar.js](https://kimmobrunfeldt.github.io/progressbar.js/);
+* For Node.js there are libraries such as [cli-progress](https://www.npmjs.com/package/cli-progress) and [progress](https://www.npmjs.com/package/progress);
+* For Deno there is [progress](https://deno.land/x/progress@v1.3.8) and [deno_progress](https://deno.land/x/deno_progress@0.6.0);
+* Other runtimes - like Bun - might support one or more of the above.
+
 You can download shared files by loading those from their URL instead of loading from the Storage class:
 
 ```js node2deno-v1

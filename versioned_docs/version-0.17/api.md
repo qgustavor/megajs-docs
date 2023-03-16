@@ -65,11 +65,15 @@ Get info related to account and quota usage. It returns a object with the follow
 
 * `type`: the account type
 * `spaceUsed`: the space used by the account, in bytes
-* `spaceTotal`: the total space avaliable, in bytes
+* `spaceTotal`: the total space available, in bytes
 * `downloadBandwidthUsed`: the bandwidth quota used, in bytes
-* `downloadBandwidthTotal`: the total bandwidth quota avaliable, in bytes
+* `downloadBandwidthTotal`: the total bandwidth quota available, in bytes
 * `sharedBandwidthUsed`: the shared bandwidth quota used, in bytes
-* `sharedBandwidthLimit`: the total shared bandwidth quota avaliable, in bytes
+* `sharedBandwidthLimit`: the total shared bandwidth quota available, in bytes
+
+#### `.close()`
+
+Closes server-to-client connection. Other connections will not be closed. Attempting to call API requests after this point will result in errors. It will not log out from MEGA.
 
 ### Events
 
@@ -148,6 +152,11 @@ This function downloads files using chunked multiple parallel connections to spe
 * `returnCiphertext`: if `true` the ciphertext will be returned, which can be decrypted later using `decrypt` low level function.
 
 The download function also support `start` and `end` options, like [`fs.createReadStream`](https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options).
+
+You can get progress events from the `progress` event which will contain the following properties:
+
+* `bytesLoaded`: the number of bytes loaded;
+* `bytesTotal`: the total number of bytes of the file;
 
 ## Mutable File
 

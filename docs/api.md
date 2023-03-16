@@ -77,11 +77,15 @@ Get info related to account and quota usage. It returns a object with the follow
 
 * `type`: the account type
 * `spaceUsed`: the space used by the account, in bytes
-* `spaceTotal`: the total space avaliable, in bytes
+* `spaceTotal`: the total space available, in bytes
 * `downloadBandwidthUsed`: the bandwidth quota used, in bytes
-* `downloadBandwidthTotal`: the total bandwidth quota avaliable, in bytes
+* `downloadBandwidthTotal`: the total bandwidth quota available, in bytes
 * `sharedBandwidthUsed`: the shared bandwidth quota used, in bytes
-* `sharedBandwidthLimit`: the total shared bandwidth quota avaliable, in bytes
+* `sharedBandwidthLimit`: the total shared bandwidth quota available, in bytes
+
+#### `.close()`
+
+Logs out MEGA and closes server-to-client connection. Other connections will not be closed. Attempting to call API requests after this point will result in errors.
 
 ### Events
 
@@ -177,6 +181,11 @@ This function downloads files using chunked multiple parallel connections to spe
 The download function also support `start` and `end` options, like [`fs.createReadStream`](https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options).
 
 If the number of connections get limited to `1` then chunking will be disabled and the entire file will be downloaded using a single connection. For some reason doing this often results in less connection errors. At the moment this feature relies on a node-fetch extension and might not work in non-Node environments.
+
+You can get progress events from the `progress` event which will contain the following properties:
+
+* `bytesLoaded`: the number of bytes loaded;
+* `bytesTotal`: the total number of bytes of the file;
 
 #### `.downloadBuffer([options])`
 
