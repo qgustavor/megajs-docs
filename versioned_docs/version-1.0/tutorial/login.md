@@ -20,6 +20,12 @@ const storage = new Storage({
 await storage.ready
 ```
 
+:::note
+
+Two factor authentication is still not supported but anyone is free to submit a pull request implementing it.
+
+:::
+
 It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (i.e. Firefox).
 
 Events can still be used like in V0:

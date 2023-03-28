@@ -9,3 +9,9 @@ The most common usage of this library - at least as found in GitHub - is uploadi
 This tutorial will guide you how to use most of the features of this library.
 
 You can follow some of those examples in a browser. There are not any live examples because those examples need an MEGA account and, while this tutorial could prompt you to give your account credentials, is better to avoid that to improve security.
+
+:::caution
+
+Those are the docs of version 0.17 which will no longer be updated. If possible [migrate to 1.0](/docs/migrating-from-v0)!
+
+:::
