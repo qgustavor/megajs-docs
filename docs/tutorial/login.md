@@ -20,11 +20,17 @@ const storage = new Storage({
 await storage.ready
 ```
 
-:::note
+Since 1.2.0 you can use two-factor authentication, just provide it like this:
 
-Two factor authentication is still not supported but anyone is free to submit a pull request implementing it.
-
-:::
+```js
+const storage = new Storage({
+  email: 'user@example.com',
+  password: 'correct horse battery example',
+  userAgent: 'ExampleClient/1.0',
+  // highlight-next-line
+  secondFactorCode: '123456'
+})
+```
 
 It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (i.e. Firefox).
 

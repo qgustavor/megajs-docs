@@ -37,6 +37,7 @@ const storage = new Storage(options, [callback])
 
 * `email` - User login email **required**.
 * `password` - User password **required**.
+* `secondFactorCode` - User two-factor authentication code (since 1.2.0).
 * `keepalive` - Keep connection open to receive server-to-client requests that will be mapped to events. Defaults to `true`.
 * `autologin` - Logins to MEGA. Defaults to `true`. Set to `false` if you want to change request options, like proxy, [like shown here](tutorial/advanced.md#setting-request-configuration).
 * `autoload` - Load in file structure. Defaults to `true`.
