@@ -12,7 +12,10 @@ import { Storage } from 'megajs'
 const storage = new Storage({
   email: 'user@example.com',
   password: 'correct horse battery example',
-  userAgent: 'ExampleClient/1.0'
+  // node2deno:if-node
+  userAgent: 'ExampleApplication/1.0'
+  // node2deno:if-deno
+  userAgent: null
 })
 
 // Will resolve once the user is logged in
@@ -20,7 +23,9 @@ const storage = new Storage({
 await storage.ready
 ```
 
-Since 1.2.0 you can use two-factor authentication, just provide it like this:
+It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (like Firefox).
+
+You can use two-factor authentication, just provide the second factor code like this:
 
 ```js
 const storage = new Storage({
@@ -31,8 +36,6 @@ const storage = new Storage({
   secondFactorCode: '123456'
 })
 ```
-
-It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (i.e. Firefox).
 
 Events can still be used like in V0:
 

@@ -38,7 +38,12 @@ const codeExampleUpload = `import { Storage } from 'megajs'
 
 const storage = await new Storage({
   email: 'user@example.com',
+// node2deno:if-node
   password: 'correct horse battery example'
+// node2deno:if-deno
+  password: 'correct horse battery example',
+// node2deno:if-deno
+  userAgent: null
 }).ready
 
 const file = await storage.upload('hello-world.txt', 'Hello world!').complete
@@ -48,6 +53,8 @@ console.log('The file was uploaded!', file)
 const codeExampleDownload = `import { File } from 'megajs'
 
 const file = File.fromURL('https://mega.nz/file/example#example')
+// node2deno:if-deno
+file.api.userAgent = null
 
 await file.loadAttributes()
 console.log(file.name) // file name
