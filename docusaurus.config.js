@@ -23,7 +23,7 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/qgustavor/megajs-docs/tree/master/',
+          editUrl: 'https://github.com/qgustavor/megajs-docs/tree/main/',
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
             [require('./src/plugins/node2deno'), {}]
