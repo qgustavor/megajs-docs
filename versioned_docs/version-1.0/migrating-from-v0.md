@@ -42,7 +42,7 @@ File.defaultHandleRetries = (tries, error, cb) => {
 
 ## Code uses modern JavaScript
 
-Code is not being compiled down to ES5 anymore. It would require Babel and it is slow. If you target older browsers run the code thought Babel.
+Code is not being compiled down to ES5 anymore. It would require Babel and it is slow. If you target older browsers compile the code to ES5 using [Babel](https://babeljs.io/).
 
 ## Methods now return promises
 
