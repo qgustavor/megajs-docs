@@ -110,7 +110,9 @@ export default function TagLine () {
 
   return (
     <p className='hero__subtitle flip_tagline' ref={el}>
-      Unofficial JavaScript SDK for MEGA
+      <div>Unofficial</div>
+      <div>JavaScript</div>
+      <div>SDK for MEGA</div>
     </p>
   )
 }
