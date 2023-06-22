@@ -8,14 +8,12 @@ export default function TagLine () {
 
   useEffect(() => {
     // Fallback for older browsers
-    if (!el.current.animate) {
-      el.current.textContent = 'Unofficial JavaScript SDK for MEGA'
-      return
-    }
+    if (!el.current.animate) return
+    el.current.innerHTML = ''
 
     const originalWords = ['Node.js', 'Browser', 'TypeScript', 'JavaScript']
     let words = originalWords.slice()
-    let currentWord = ''
+    let currentWord = 'JavaScript'
 
     const prefixEl = document.createElement('div')
     const middleEl = document.createElement('div')
@@ -103,7 +101,7 @@ export default function TagLine () {
       await wait(currentWord ? 2500 : 300)
       animationLoop()
     }
-    animationLoop()
+    setTimeout(animationLoop, 2500)
 
     return () => {
       clearTimeout(currentTimeout)
@@ -111,6 +109,8 @@ export default function TagLine () {
   }, [])
 
   return (
-    <p className='hero__subtitle flip_tagline' ref={el}></p>
+    <p className='hero__subtitle flip_tagline' ref={el}>
+      Unofficial JavaScript SDK for MEGA
+    </p>
   )
 }
