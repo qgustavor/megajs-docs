@@ -15,9 +15,9 @@ export default function TagLine () {
     let words = originalWords.slice()
     let currentWord = 'JavaScript'
 
-    const prefixEl = document.createElement('div')
-    const middleEl = document.createElement('div')
-    const suffixEl = document.createElement('div')
+    const prefixEl = document.createElement('span')
+    const middleEl = document.createElement('span')
+    const suffixEl = document.createElement('span')
     prefixEl.textContent = 'Unofficial'
     middleEl.textContent = currentWord
     suffixEl.textContent = 'SDK for MEGA'
@@ -110,9 +110,9 @@ export default function TagLine () {
 
   return (
     <p className='hero__subtitle flip_tagline' ref={el}>
-      <div>Unofficial</div>
-      <div>JavaScript</div>
-      <div>SDK for MEGA</div>
+      <span>Unofficial</span>
+      <span>JavaScript</span>
+      <span>SDK for MEGA</span>
     </p>
   )
 }

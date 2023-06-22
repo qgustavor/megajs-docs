@@ -49,7 +49,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   51%, 100% {opacity: 0}
 }
 
-.flip_tagline div {
+.flip_tagline span {
   display: inline-block;
   margin: 0 0.2em;
 }
