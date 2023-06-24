@@ -18,13 +18,13 @@ function HomepageHeader () {
         <div className={styles.buttons}>
           <Link
             className='button button--secondary button--lg'
-            to='/docs/tutorial/intro'
+            to='/docs/1.0/tutorial/intro'
           >
             Tutorial
           </Link>
           <Link
             className='button button--secondary button--lg'
-            to='/docs/api'
+            to='/docs/1.0/api'
           >
             API Reference
           </Link>
@@ -108,7 +108,7 @@ export default function Home () {
             <div className="row">
               <Link
                 className='button button--secondary button--lg button--block'
-                to='/docs/tutorial/intro'
+                to='/docs/1.0/tutorial/intro'
               >
                 Check the tutorial for more info
               </Link>

@@ -81,11 +81,11 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/docs/tutorial/intro'
+                to: '/docs/1.0/tutorial/intro'
               },
               {
                 label: 'API reference',
-                to: '/docs/api'
+                to: '/docs/1.0/api'
               }
             ]
           },

@@ -101,7 +101,7 @@ export default function TagLine () {
       await wait(currentWord ? 2500 : 300)
       animationLoop()
     }
-    setTimeout(animationLoop, 2500)
+    setTimeout(animationLoop, 500)
 
     return () => {
       clearTimeout(currentTimeout)
