@@ -12,16 +12,13 @@ npm install megajs@1
 
 Since V1 it already includes TypeScript types (thanks to [ChampionBuffalo1](https://github.com/ChampionBuffalo1) for contributing).
 
-If you are working directly from a browser or from Deno you can import the library using ES modules:
+If you are working directly from a browser you can import the library using ES modules:
 
 ```js
-// @deno-types="https://cdn.skypack.dev/megajs@1/types/es.d.ts"
-import { Storage } from 'https://cdn.skypack.dev/megajs@1'
+import { Storage } from 'https://cdn.skypack.dev/megajs'
 ```
 
 Note that it will load the latest v1 version, instead remember to update to URL to point to a specific version to reduce the chances of the code breaking when a new version gets released.
-
-Skypack supports `?dts` to provide type declarations but it will return Node types which are not compatible with Deno. That's why you need to use `@deno-types` to load the correct type declarations. You will also need to run Deno with `--allow-net` or `--prompt` because MEGA use multiple domains and Deno still not support something like `--allow-net=*.mega.co.nz` (the API still uses `.co.nz`, not `.nz`).
 
 You can also use `<script>` tags to load the UMD version:
 
@@ -35,8 +32,10 @@ You can also host the above files into your server instead of loading those from
 
 :::info
 
-Remember to import the browser version when targeting the browser environment, even when using build tools, as it includes browser-compatible cryptographic functions instead of depending on [the Node crypto module](https://nodejs.org/api/crypto.html). Trying to use a browser port of Node crypto like [crypto-browserify](https://www.npmjs.com/package/crypto-browserify) can result in huge build sizes and hurt performance. Because Deno's environment is similar to browser's Deno also use the browser version.
+Remember to import the browser version when targeting the browser environment, even when using build tools, as it includes browser-compatible cryptographic functions instead of depending on [the Node crypto module](https://nodejs.org/api/crypto.html). Trying to use a browser port of Node crypto like [crypto-browserify](https://www.npmjs.com/package/crypto-browserify) can result in huge build sizes and hurt performance.
 
 :::
+
+Deno is **not supported** because it can't connect to MEGA servers due to issues related to TLS ciphers. That's something that cannot be fixed by this library and neither Deno nor MEGA developers want to fix. Because of that the only choice for this library is not supporting Deno.
 
 In the next part of this tutorial we will login to a MEGA account using the `Storage` class loaded above.

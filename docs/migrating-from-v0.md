@@ -54,4 +54,4 @@ Since streams throw errors synchronously now `.encrypt()` and `.verify()` also d
 
 ## Streaming libraries were updated or replaced
 
-It should not cause many issues, but maybe can cause changes in library behavior in case you depended on some Streams1 behavior. It may make the library more responsive than before, after all, the main reason to update those libraries was to fix Deno support.
+It should not cause many issues, but maybe can cause changes in library behavior in case you depended on some Streams1 behavior. It may make the library more responsive than before.

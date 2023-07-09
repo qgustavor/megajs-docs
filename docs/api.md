@@ -177,7 +177,7 @@ This function downloads files using chunked multiple parallel connections to spe
 * `maxChunkSize`: maximum chunk size, in bytes (max 1MB);
 * `returnCiphertext`: if `true` the ciphertext will be returned, which can be decrypted later using `decrypt` low level function.
 * `handleRetries`: accepts a function to handle retries on chunk downloading errors, overrides the function defined by `File.defaultHandleRetries`;
-* `forceHttps`: if set to `true` will download using HTTPS, if set to `false` will download using HTTP. Default to `false` in the Node build and `true` in the browser/Deno build. Set to `false` if you are having TLS errors;
+* `forceHttps`: if set to `true` will download using HTTPS, if set to `false` will download using HTTP. Default to `false` in the Node build and `true` in the browser build. Set to `false` if you are having TLS errors;
 
 The download function also support `start` and `end` options, like [`fs.createReadStream`](https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options).
 

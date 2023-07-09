@@ -51,7 +51,6 @@ In order to render the values returned by the `progress` event you have many opt
 
 * For browsers you can use [the `<progress>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) or libraries such as [progressbar.js](https://kimmobrunfeldt.github.io/progressbar.js/);
 * For Node.js there are libraries such as [cli-progress](https://www.npmjs.com/package/cli-progress) and [progress](https://www.npmjs.com/package/progress);
-* For Deno there is [progress](https://deno.land/x/progress@v1.3.8) and [deno_progress](https://deno.land/x/deno_progress@0.6.0);
 * Other runtimes - like Bun - might support one or more of the above.
 
 You can download shared files by loading those from their URL instead of loading from the Storage class:

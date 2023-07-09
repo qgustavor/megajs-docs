@@ -21,25 +21,16 @@ const writableStream = fs.createWriteStream(filename, {
 downloadStream.pipe(writableStream)
 ```
 
-The above example assume a Node.js environment, in other environments you might need to convert the Node stream returned by `download` to the way file streaming is handled in this environment (like Deno's `Deno.open`).
+The above example assume a Node.js environment, in other environments you might need to convert the Node stream returned by `download` to the way file streaming is handled in this environment.
 
 Interrupted downloads are not checked due to limitations on MEGA's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
 
-```js node2deno-v1
+```js
 import { File, verify } from 'megajs'
-// node2deno:if-node
 import { createReadStream } from 'node:fs'
-// node2deno:if-deno
-import { iterateReader } from 'https://cdn.deno.land/std/versions/0.125.0/raw/streams/conversion.ts'
 
-// node2deno:if-node
 // Get a file read stream. createReadStream can be used:
-// node2deno:if-deno
-// Get a file read stream. Deno.open and iterateReader can be used:
-// node2deno:if-node
 const readStream = createReadStream(filename)
-// node2deno:if-deno
-const readStream = iterateReader(await Deno.open(filename))
 
 const file = File.fromURL(url)
 const verifyStream = verify(file.key)
@@ -52,16 +43,7 @@ verifyStream.on('end', () => {
   // File is OK
 })
 
-// node2deno:if-node
 readStream.pipe(verifyStream)
-// node2deno:if-deno
-for await (const data of readStream) {
-// node2deno:if-deno
-  verifyStream.write(data)
-// node2deno:if-deno
-}
-// node2deno:if-deno
-verifyStream.end()
 ```
 
 Here is a browser implementation:
