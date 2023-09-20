@@ -1,111 +1,116 @@
 // @ts-check
 
-const lightCodeTheme = require('prism-react-renderer/themes/github')
-const darkCodeTheme = require('prism-react-renderer/themes/dracula')
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'MEGAJS',
-  tagline: 'Unofficial JavaScript SDK for Mega',
-  url: 'https://mega.js.org',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'qgustavor',
-  projectName: 'mega',
+  title: "MEGAJS",
+  tagline: "Unofficial JavaScript SDK for Mega",
+  url: "https://mega.js.org",
+  baseUrl: "/",
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
+  favicon: "img/favicon.ico",
+  organizationName: "qgustavor",
+  projectName: "mega",
   trailingSlash: false,
 
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/qgustavor/megajs-docs/tree/main/',
+          sidebarPath: require.resolve("./sidebars.js"),
+          editUrl: "https://github.com/qgustavor/megajs-docs/tree/main/",
           remarkPlugins: [
-            [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
-            [require('./src/plugins/node2deno'), {}]
+            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+            [require("./src/plugins/node2deno"), {}],
           ],
-          lastVersion: 'current',
+          lastVersion: "current",
           versions: {
             current: {
-              label: '1.0',
-              path: '1.0'
-            }
-          }
+              label: "1.0",
+              path: "1.0",
+            },
+          },
         },
         blog: false,
         theme: {
-          customCss: require.resolve('./src/css/custom.css')
-        }
-      })
-    ]
+          customCss: require.resolve("./src/css/custom.css"),
+        },
+      }),
+    ],
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'MEGAJS',
+        title: "MEGAJS",
         items: [
           {
-            type: 'doc',
-            docId: 'tutorial/intro',
-            position: 'left',
-            label: 'Tutorial'
+            type: "doc",
+            docId: "tutorial/intro",
+            position: "left",
+            label: "Tutorial",
           },
           {
-            type: 'doc',
-            docId: 'api',
-            position: 'left',
-            label: 'API Reference'
+            type: "doc",
+            docId: "api",
+            position: "left",
+            label: "API Reference",
           },
           {
-            type: 'docsVersionDropdown',
-            position: 'right',
-            dropdownActiveClassDisabled: true
+            type: "docsVersionDropdown",
+            position: "right",
+            dropdownActiveClassDisabled: true,
           },
           {
-            href: 'https://github.com/qgustavor/mega',
-            label: 'GitHub',
-            position: 'right'
-          }
-        ]
+            href: "https://github.com/qgustavor/mega",
+            label: "GitHub",
+            position: "right",
+          },
+        ],
       },
       footer: {
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/1.0/tutorial/intro'
+                label: "Tutorial",
+                to: "/docs/1.0/tutorial/intro",
               },
               {
-                label: 'API reference',
-                to: '/docs/1.0/api'
-              }
-            ]
+                label: "API reference",
+                to: "/docs/1.0/api",
+              },
+              {
+                label: "Version 0.17",
+                to: "docs/0.17/api",
+              },
+            ],
           },
           {
-            title: 'More',
+            title: "More",
             items: [
               {
-                label: 'GitHub',
-                href: 'https://github.com/qgustavor/mega'
-              }
-            ]
-          }
+                label: "GitHub",
+                href: "https://github.com/qgustavor/mega",
+              },
+            ],
+          },
         ],
-        copyright: 'Built with <a href="https://docusaurus.io/">Docusaurus</a>.'
+        copyright:
+          'Built with <a href="https://docusaurus.io/">Docusaurus</a>.',
       },
       prism: {
         theme: lightCodeTheme,
-        darkTheme: darkCodeTheme
-      }
-    })
-}
+        darkTheme: darkCodeTheme,
+      },
+    }),
+};
 
-module.exports = config
+module.exports = config;
