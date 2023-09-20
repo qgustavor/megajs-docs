@@ -8,7 +8,7 @@ This tutorial assumes that you already have Node.js installed on your system. If
 
 ### Install the package
 
-You can install the Mega JS library with your preffered package manager:
+You can install the MEGA JS library with your preffered package manager:
 
 ```bash npm2yarn
 npm install megajs@latest
@@ -18,7 +18,7 @@ npm install megajs@latest
 
 ### TypeSript Compactibility
 
-Starting from <a href='/docs/1.0/api'>v1.0</a>, Mega JS now supports TypeScript and includes the corresponding type declarations, thus enhancing the development experience for TypeScript users. This means you can enjoy improved type safety while working with Mega JS in your TypeScript projects.
+Starting from <a href='/docs/1.0/api'>v1.0</a>, MEGA JS now supports TypeScript and includes the corresponding type declarations, thus enhancing the development experience for TypeScript users. This means you can enjoy improved type safety while working with MEGA JS in your TypeScript projects.
 
 ### Browser Setup
 
@@ -40,7 +40,7 @@ This will load the library in `window.mega`, so `Storage` will be available via 
 
 You can also host the above files into your server instead of loading those from unpkg or Skypack which may help privacy and security.
 
-### Using Mega JS in the Browser
+### Using MEGA JS in the Browser
 
 When targeting the browser environment, it's essential to import the browser version of MEGA JS. This version includes cryptographic functions that are compatible with browsers, eliminating the need for dependencies like the Node crypto module.
 
