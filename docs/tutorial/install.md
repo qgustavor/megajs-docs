@@ -7,7 +7,7 @@ sidebar_position: 2
 If you are targeting Node or using a build tool, then you need to install the library first:
 
 ```bash npm2yarn
-npm install megajs@1
+npm install megajs
 ```
 
 Since V1 it already includes TypeScript types (thanks to [ChampionBuffalo1](https://github.com/ChampionBuffalo1) for contributing).
