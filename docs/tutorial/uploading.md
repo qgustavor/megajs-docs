@@ -85,6 +85,14 @@ uploadStream.on('error', error) => {
 
 After uploading you will get a `File` object either via the callback or the `complete` event. If you opt to use `.on('error')` then it will take precedence and neither the `.complete` promise nor the callback will throw errors.
 
+You can get progress events from the `progress` event like this:
+
+```js
+uploadStream.on('progress', info => {
+  console.log('Uploaded', info.bytesUploaded, 'bytes of', info.bytesTotal)
+})
+```
+
 Because network connections can be unstable sometimes this library retries on errors up to eight times. You can change this behavior by providing a retry handling function to `upload()`:
 
 ```js
