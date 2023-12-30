@@ -6,8 +6,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 export default function CodeBlockSwitchable (props) {
   const versionSuffix = (props.version == undefined || Number(props.version) === 1) ? '' : '@' + props.version
-  const majorVersion = parseInt(version.split('.')[0])
-  const modes = [ 'Node ESM', 'Node CJS', majorVersion > 0 ? 'Browser' : 'Browser' ]
+  const modes = [ 'Node ESM', 'Node CJS', 'Browser' ]
   const replacementFns = [
     e => e
       .replace(/\/\/ node2deno:if-deno\n.*\n?/g, '')
