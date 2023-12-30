@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
 export default function CodeBlockSwitchable (props) {
-  const version = props.version || '0'
+  const versionSuffix = (props.version == undefined || Number(version) === 1) ? '' : '@' + version
   const majorVersion = parseInt(version.split('.')[0])
   const modes = [ 'Node ESM', 'Node CJS', majorVersion > 0 ? 'Browser' : 'Browser' ]
   const replacementFns = [
@@ -27,7 +27,7 @@ export default function CodeBlockSwitchable (props) {
       return e
     },
     e => e
-      .replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs@${version}'`)
+      .replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs${versionSuffix}'`)
       .replace(/\/\/ node2deno:if-node\n.*\n/g, '')
       .replace(/\/\/ node2deno:if-deno\n/g, '')
   ]
