@@ -41,13 +41,22 @@ You can replace the MEGA gateway, which is useful when testing to point to a moc
 api.gateway // default: https://g.api.mega.co.nz/
 ```
 
-You can also replace the `fetch` function used:
+You can also replace the `fetch` wrapper function used:
 
 ```js
 api.fetch = someFetchLikeFunction
 ```
 
 But by doing so the `api.userAgent`, `api.httpAgent` and `api.httpsAgent` shortcuts will be ignored and will need to be reimplemented.
+
+As v1.2.0 you can replace the `fetch` module function. It defaults to `globalThis.fetch` and, if nonexistent, it requires `node-fetch`. To replace it override `API.fetchModule`:
+
+```js node2deno-v1
+import { API } from 'megajs'
+API.fetchModule = someFetchImplementation
+```
+
+If you replace `API.fetchModule` all code using the library will be affected, but the `api.userAgent`, `api.httpAgent` and `api.httpsAgent` shortcuts will *NOT* be ignored, as the reasoning for it is just to allow the user to provide an alternative fetch implementation for the current environment.
 
 Files created with `new File` and `File.fromURL` by default use a non-logged API instance and can be quite limited. To work around those limits accounts can be used, so downloading will use the limits from those:
 
