@@ -200,6 +200,48 @@ You can get progress events from the `progress` event which will contain the fol
 
 Wraps the `.download()` function and return a Promise which resolves to a Buffer containing the file data. Accept the same options as `.download()`. It still accepts a callback, but then it's better to call `.download()` to avoid creating an unneeded promise.
 
+#### `.find(query, [deep])`
+
+Search for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
+
+```js
+// Returns a file named `test.txt` inside the folder or undefined if no file gets found
+folder.find('test.txt')
+
+// Returns a file named `test.txt` inside the folder while searching recursively
+folder.find('test.txt', true)
+
+// Returns the first file with a size larger than 1024 bytes
+folder.find(file => file.size > 1024)
+```
+
+#### `.filter(query, [deep])`
+
+Filters for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
+
+```js
+// Returns an array with all files named `test.txt` inside the folder
+folder.filter('test.txt')
+
+// Returns an array with all files named `test.txt` while searching recursively
+folder.filter('test.txt', true)
+
+// Returns an array with all files with a size larger than 1024 bytes
+folder.filter(file => file.size > 1024)
+```
+
+#### `.navigate(query)`
+
+Tranverses directories. Query can be a string with a `/` delimited path or an array of strings. Names are matched case sensitive.
+
+```js
+// Returns a file named `test.txt` inside "some folder"
+folder.navigate('some folder/test.txt')
+
+// Paths can also be defined as arrays of strings
+folder.navigate(['some folder', 'test.txt'])
+```
+
 ### Static methods
 
 #### `File.fromURL(url, [options])`
@@ -388,48 +430,6 @@ Set file as favorite is `isFavorite` is `true`
 ```js
 await file.setFavorite(true)
 await file.setFavorite(false)
-```
-
-#### `.find(query, [deep])`
-
-Search for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
-
-```js
-// Returns a file named `test.txt` inside the folder or undefined if no file gets found
-folder.find('test.txt')
-
-// Returns a file named `test.txt` inside the folder while searching recursively
-folder.find('test.txt', true)
-
-// Returns the first file with a size larger than 1024 bytes
-folder.find(file => file.size > 1024)
-```
-
-#### `.filter(query, [deep])`
-
-Filters for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
-
-```js
-// Returns an array with all files named `test.txt` inside the folder
-folder.filter('test.txt')
-
-// Returns an array with all files named `test.txt` while searching recursively
-folder.filter('test.txt', true)
-
-// Returns an array with all files with a size larger than 1024 bytes
-folder.filter(file => file.size > 1024)
-```
-
-#### `.navigate(query)`
-
-Tranverses directories. Query can be a string with a `/` delimited path or an array of strings. Names are matched case sensitive.
-
-```js
-// Returns a file named `test.txt` inside "some folder"
-folder.navigate('some folder/test.txt')
-
-// Paths can also be defined as arrays of strings
-folder.navigate(['some folder', 'test.txt'])
 ```
 
 ### Events
