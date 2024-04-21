@@ -34,11 +34,14 @@ To access files in Storage class you can use `.root` to access the root folder t
 If you need to find a file from a folder by the name you can use `Array.prototype.find` (or other array methods) on the `.children` property:
 
 ```js
-const file = storage.root.children.find(file => file.name === 'hello-world.txt')
+// Returns the hello-world.txt file from the storage root
+storage.root.children.find(file => file.name === 'hello-world.txt') 
 
-storage.root.children.find(file => file.name === 'hello-world.txt') // Returns the hello-world.txt file from the storage root
-storage.root.children.find(folder => folder.name === 'My Folder') // Returns the "My Folder" directory from the storage root
-storage.root.children.filter(file => file.name.match(/\.jpe?g$/i)) // Returns all .jpeg and .jpg files from the storage root
+// Returns the "My Folder" directory from the storage root
+storage.root.children.find(folder => folder.name === 'My Folder')
+
+// Returns all .jpeg and .jpg files from the storage root
+storage.root.children.filter(file => file.name.match(/\.jpe?g$/i))
 ```
 
 Because of AI chat tools (like Gemini or Copilot) which constantly hallucinated unexistent methods, a `storage.find` helper method, originally an AI hallucination, was created in version 1.2.0:

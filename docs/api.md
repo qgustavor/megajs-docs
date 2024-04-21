@@ -62,7 +62,13 @@ Only loaded after `.resolve`, `readyCallback()` or `ready` event fires.
 
 ### Methods
 
-`.upload` and `.mkdir` methods maps to `storage.root.upload` and `storage.root.mkdir` methods.
+#### Shorthands
+
+- `.upload` maps to `storage.root.upload`.
+- `.mkdir` maps to `storage.root.mkdir`.
+- `.find` maps to `storage.root.find`.
+- `.filter` maps to `storage.root.filter`.
+- `.navigate` maps to `storage.root.navigate`.
 
 #### `.reload()`
 
@@ -99,7 +105,7 @@ These events fire on file changes when `keepalive` is used. The changes can be t
 
 ## File
 
-Basic class that handle files and folders. Often used to handle **shared** files and folders.
+Basic class that handle files **and** folders. Often used to handle **shared** files and folders.
 
 ### Creation
 
@@ -224,16 +230,20 @@ File.defaultHandleRetries = (tries, error, cb) => {
 
 ## Mutable File
 
-Extends `File` adding methods that are only available when logged in.
+Represents files **and** folders that the current user can change in some way (like renaming). Extends `File` adding methods that are only available when logged in.
 
 **Please note:** what are mutable are the attributes of the files and folders, **not** their contents, as this library don't support this yet.
 
 ### Basic syntax
 
-Those objects can be only accessed when logged in and can only be accessed via the properties of the `Storage` object.
+Those objects can be only accessed when logged in and can only be accessed via the `Storage` object.
 
 ```js
-storage.root.children[0] // the first file in the root of the storage
+// Returns the first file in the root of the storage
+storage.root.children[0]
+
+// Returns a file named "test.txt" in the root of the storage
+storage.find('test.txt')
 ```
 
 ### Methods
@@ -378,6 +388,48 @@ Set file as favorite is `isFavorite` is `true`
 ```js
 await file.setFavorite(true)
 await file.setFavorite(false)
+```
+
+#### `.find(query, [deep])`
+
+Search for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
+
+```js
+// Returns a file named `test.txt` inside the folder or undefined if no file gets found
+folder.find('test.txt')
+
+// Returns a file named `test.txt` inside the folder while searching recursively
+folder.find('test.txt', true)
+
+// Returns the first file with a size larger than 1024 bytes
+folder.find(file => file.size > 1024)
+```
+
+#### `.filter(query, [deep])`
+
+Filters for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
+
+```js
+// Returns an array with all files named `test.txt` inside the folder
+folder.filter('test.txt')
+
+// Returns an array with all files named `test.txt` while searching recursively
+folder.filter('test.txt', true)
+
+// Returns an array with all files with a size larger than 1024 bytes
+folder.filter(file => file.size > 1024)
+```
+
+#### `.navigate(query)`
+
+Tranverses directories. Query can be a string with a `/` delimited path or an array of strings. Names are matched case sensitive.
+
+```js
+// Returns a file named `test.txt` inside "some folder"
+folder.navigate('some folder/test.txt')
+
+// Paths can also be defined as arrays of strings
+folder.navigate(['some folder', 'test.txt'])
 ```
 
 ### Events
