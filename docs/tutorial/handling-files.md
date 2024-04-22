@@ -192,4 +192,15 @@ The method `.createFolder` **does not exist**: it's an AI hallucination, use `.m
 
 The complete list of methods that can be called on files and folders can be found in the API page.
 
+:::note
+
+This library handles MEGA encryption, file and folder handling and networking. Since this is a library focused on work on multiple platforms (Node.js and browsers) **it does not and will not** handle file reading, file writting nor any platform-specific file operations.
+
+You should implement file I/O using the functions provided by your platform (like reading files using `fs.createReadStream` on Node and `<input type="file">` on browsers, and writting using `fs.createWriteStream` on Node and `<a download>` on browsers).
+
+Since this library cannot read folders (as it would require platform-specific code) it cannot upload folders. If you want to upload a folder you should handle folder creation yourself then upload each file one by one on the created folder. If you wish, make a platform-specific wrapper of this library to handle this case and publish on NPM.
+
+:::
+
+
 In the next part of the tutorial we will learn how to download files from the storage and public shared files.
