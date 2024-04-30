@@ -12,6 +12,6 @@ You can follow some of those examples in a browser. There are not any live examp
 
 :::caution
 
-Those are the docs of version 0.17 which will no longer be updated. If possible [migrate to 1.0](/docs/1.0/migrating-from-v0)!
+Those are the docs of version 0.17 which will no longer be updated. If possible [migrate to 1.0](/docs/1.0/migrating-from-old-versions)!
 
 :::
