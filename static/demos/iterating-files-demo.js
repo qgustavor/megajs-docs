@@ -1,9 +1,5 @@
-import { Storage } from 'npm:megajs'
-
-const email = prompt('Enter your email:')
-const password = prompt('Enter your password (will be visible):')
-
-const storage = await new Storage({ email, password }).ready
+import { getLoggedInStorage } from './logging-in-demo.js'
+const storage = await getLoggedInStorage()
 
 // Deletes all Thumbs.db files in the storage
 // (second argument makes it recursive)

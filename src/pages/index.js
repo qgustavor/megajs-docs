@@ -24,6 +24,12 @@ function HomepageHeader () {
           </Link>
           <Link
             className='button button--secondary button--lg'
+            to='/docs/1.0/examples/intro'
+          >
+            Examples
+          </Link>
+          <Link
+            className='button button--secondary button--lg'
             to='/docs/1.0/api'
           >
             API Reference

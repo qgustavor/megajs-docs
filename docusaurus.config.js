@@ -58,6 +58,12 @@ const config = {
           },
           {
             type: 'doc',
+            docId: 'examples/intro',
+            position: 'left',
+            label: 'Code examples'
+          },
+          {
+            type: 'doc',
             docId: 'api',
             position: 'left',
             label: 'API Reference'

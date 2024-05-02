@@ -1,6 +1,10 @@
+---
+sidebar_position: 2.010
+---
+
 # Folder uploading
 
-This example is meant to be run using Deno. You can try by running this code at your console:
+You can try by running this code at your console:
 
 ```bash
 deno run https://mega.js.org/demos/folder-uploading-demo.js
