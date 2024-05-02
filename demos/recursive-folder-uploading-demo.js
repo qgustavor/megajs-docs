@@ -1,15 +1,11 @@
-import { Storage } from 'npm:megajs'
-
-const email = prompt('Enter your email:')
-const password = prompt('Enter your password (will be visible):')
-
-const storage = await new Storage({ email, password }).ready
+import { getLoggedInStorage } from './logging-in-demo.js'
+const storage = await getLoggedInStorage()
 
 const folderName = prompt('Enter a folder name:')
 const folderStat = await Deno.stat(folderName)
 if (!folderStat.isDirectory) throw Error('Not a directory!')
 
-const handleFolder = async (path, name, rootNode) => {
+async function handleFolder (path, name, rootNode) => {
   // Create a folder on the remote node
   const megaFolder = await rootNode.mkdir(name)
 
@@ -18,12 +14,17 @@ const handleFolder = async (path, name, rootNode) => {
     const filePath = path + '/' + entry.name
     const fileStat = await Deno.stat(filePath)
 
+    // If the file is a directory, just recurse
     if (fileStat.isDirectory) {
       await handleFolder(filePath, entry.name, megaFolder)
     } else {
       const data = await Deno.readFile(filePath)
       await megaFolder.upload({
         name: entry.name,
+        // You need to set forceHttps to false in order to make
+        // Deno connect to the unsafe MEGA upload servers
+        // (which use out-of-date TLS configurations)
+        // That's not needed in Node.js nor in browsers
         forceHttps: false
       }, data).complete
     }
