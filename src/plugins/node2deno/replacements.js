@@ -2,36 +2,57 @@ const modeNames = [ 'Node ESM', 'Node CJS', 'Browser', 'Deno' ]
 const modes = [ 'node_esm', 'node_cjs', 'browser', 'deno' ]
 const convert = (code, mode) => replacementFns[modes.indexOf(mode)](code)
 
-const browserReplacement = e => e
-  .replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs'`)
-  .replace(/\/\/ node2deno:if-node\n.*\n/g, '')
-  .replace(/\/\/ node2deno:if-deno\n/g, '')
+function preprocessCode (code, condition) {
+  let shouldInclude = true
+  let skipElse = false
+  let onSingleIf = false
+
+  return code.split('\n').filter(line => {
+    const trimmedLine = line.trim()
+    if (trimmedLine === '// node2deno end') {
+      shouldInclude = true
+      skipElse = false
+    } else if (trimmedLine === '// node2deno else') {
+      shouldInclude = !skipElse
+    } else if (trimmedLine.startsWith('// node2deno else if: ')) {
+      if (!skipElse) {
+        const directives = trimmedLine.slice(22).trim().split(' ')
+        shouldInclude = directives.includes(condition)
+        if (shouldInclude) skipElse = true
+      }
+    } else if (trimmedLine.startsWith('// node2deno single: ')) {
+      const directives = trimmedLine.slice(21).trim().split(' ')
+      shouldInclude = directives.includes(condition)
+      onSingleIf = true
+    } else if (trimmedLine.startsWith('// node2deno: ')) {
+      const directives = trimmedLine.slice(14).trim().split(' ')
+      shouldInclude = directives.includes(condition)
+      if (shouldInclude) skipElse = true
+    } else if (shouldInclude) {
+      onSingleIf = false
+      return true
+    } else if (onSingleIf) {
+      onSingleIf = false
+      shouldInclude = true
+    }
+    return false
+  }).join('\n')
+}
 
 const replacementFns = [
-  e => e
-    .replace(/\/\/ node2deno:if-deno\n.*\n?/g, '')
-    .replace(/\/\/ node2deno:if-node\n/g, ''),
+  e => preprocessCode(e, 'node'),
   e => {
-    e = e
-      .replace(/\/\/ node2deno:if-deno\n.*\n?/g, '')
-      .replace(/\/\/ node2deno:if-node\n/g, '')
+    e = preprocessCode(e, 'node').replace(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')")
     if (e.includes('await ')) {
       e = e
         .replace(/^(?!import|$)/gm, '  ')
         .replace(/^\s*$/m, "\n// Node doesn't support top-level await when using CJS\n;(async function () {")
         .replace(/\n*$/, '\n}()).catch(error => {\n  console.error(error)\n  process.exit(1)\n})\n')
     }
-    e = e.replace(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')")
     return e
   },
-  e => e
-    .replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs'`)
-    .replace(/\/\/ node2deno:if-node\n.*\n/g, '')
-    .replace(/\/\/ node2deno:if-deno\n/g, ''),
-  e => e
-    .replace(/import (.+?) from 'megajs'/g, `import $1 from 'npm:megajs'`)
-    .replace(/\/\/ node2deno:if-node\n.*\n/g, '')
-    .replace(/\/\/ node2deno:if-deno\n/g, '')
+  e => preprocessCode(e, 'browser').replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs'`),
+  e => preprocessCode(e, 'deno').replace(/import (.+?) from 'megajs'/g, `import $1 from 'npm:megajs'`)
 ]
 
 export { modes, modeNames, convert, replacementFns }

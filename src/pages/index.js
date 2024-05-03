@@ -28,12 +28,6 @@ function HomepageHeader () {
           >
             Examples
           </Link>
-          <Link
-            className='button button--secondary button--lg'
-            to='/docs/1.0/api'
-          >
-            API Reference
-          </Link>
         </div>
       </div>
     </header>
@@ -44,29 +38,40 @@ const codeExampleUpload = `import { Storage } from 'megajs'
 
 const storage = await new Storage({
   email: 'user@example.com',
-// node2deno:if-node
-  password: 'correct horse battery example'
-// node2deno:if-deno
+  // node2deno: browser
   password: 'correct horse battery example',
-// node2deno:if-deno
   userAgent: null
+  // node2deno else
+  password: 'correct horse battery example'
+  // node2deno end
 }).ready
 
+// node2deno: deno
+const file = await storage.upload({
+  name: 'hello-world.txt',
+  forceHttps: false
+}, 'Hello world!').complete
+// node2deno else
 const file = await storage.upload('hello-world.txt', 'Hello world!').complete
+// node2deno end
 console.log('The file was uploaded!', file)
 `
 
 const codeExampleDownload = `import { File } from 'megajs'
 
 const file = File.fromURL('https://mega.nz/file/example#example')
-// node2deno:if-deno
+// node2deno single: browser
 file.api.userAgent = null
 
 await file.loadAttributes()
 console.log(file.name) // file name
 console.log(file.size) // file size in bytes
 
+// node2deno: deno
+const data = await file.downloadBuffer({ forceHttps: false })
+// node2deno else
 const data = await file.downloadBuffer()
+// node2deno end
 console.log(data.toString()) // file contents
 `
 

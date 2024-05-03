@@ -60,7 +60,7 @@ import { File } from 'megajs'
 
 // Get the file object from the URL
 const file = File.fromURL('https://mega.nz/file/example#example')
-// node2deno:if-deno
+// node2deno single: deno
 file.api.userAgent = null
 
 // Load file attributes
