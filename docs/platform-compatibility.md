@@ -10,7 +10,7 @@ This library started as a fork of [tonistiigi's mega](https://www.npmjs.com/pack
 
 Following its origins, this library still focuses on Node.js and is mostly used and tested on this platform.
 
-Version 1.2.0 added a change that made the library use the global `fetch` library when available instead of relying on `node-fetch`. All test cases are passing and none of the applications wrote by the librarie's author broke, so seems that's fine. If you have issues on that, debug the issue and send a pull request.
+Version 1.2.0 added a change that made the library use the global `fetch` library when available instead of relying on `node-fetch`. All test cases are passing and none of the applications wrote by the library's author broke, so seems that's fine. If you have issues on that, debug the issue and send a pull request.
 
 ## Browsers
 
@@ -22,7 +22,7 @@ Deno is partially supported:
 
 It can't connect to MEGA uploading and downloading servers due to issues related to weak TLS ciphers. That's something that cannot be fixed by this library and neither Deno developers ([source](https://github.com/denoland/deno/issues/6427#issuecomment-813662658)) nor MEGA developers ([source](https://mega.io/developers), quoted: "MEGA’s HTTPS access supports most ciphers/hashes and uses [...] **RC4/MD5** [...]") want to fix.
 
-Is still possible to use Deno by disabling HTTPS when uploading or downloading, but that's even worse than using MD5 and, because of that, the only choice for this library is not supporting Deno in the hope either Deno to enable support for weak ciphers (which are better than no cipher at all) or MEGA to support strong ciphers in all of their servers. Notice that, since MEGA works in browsers, seems that they enable strong ciphers depending on the user-agent. In fact, changing the user-agent that this library uses can affect a lot the behavior of MEGA's servers.
+Is still possible to use Deno by disabling HTTPS when uploading or downloading, but that's even worse than using MD5 and, because of that, the only choice for this library is not supporting Deno entirely. Since RC4 is broken and outdated, the trend is to more and more TLS libraries to stop supporting it, then MEGA will have to support strong ciphers in all of their servers. Notice that, since MEGA works in browsers, they already enable strong ciphers depending on the user-agent, but that's not the case for all user-agents.
 
 Besides downloading and uploading files, this library works perfectly on Deno. In fact, as stated above, it's used to test the browser builds of the library.
 

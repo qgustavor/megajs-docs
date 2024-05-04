@@ -51,7 +51,7 @@ const replacementFns = [
     }
     return e
   },
-  e => preprocessCode(e, 'browser').replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://cdn.skypack.dev/megajs'`),
+  e => preprocessCode(e, 'browser').replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://unpkg.com/megajs/dist/main.browser-es.mjs'`),
   e => preprocessCode(e, 'deno').replace(/import (.+?) from 'megajs'/g, `import $1 from 'npm:megajs'`)
 ]
 

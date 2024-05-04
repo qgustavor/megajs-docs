@@ -13,9 +13,9 @@ const storage = new Storage({
   email: 'user@example.com',
   password: 'correct horse battery example',
   // node2deno: browser
-  userAgent: 'ExampleApplication/1.0'
-  // node2deno else
   userAgent: null
+  // node2deno else
+  userAgent: 'ExampleApplication/1.0'
   // node2deno end
 })
 

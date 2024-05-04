@@ -7,10 +7,13 @@ export function getLoggedInStorage () {
   const email = Deno.env.get('MEGA_EMAIL')
   const password = Deno.env.get('MEGA_PASSWORD')
 
+  // Set up a user-agent
+  const userAgent = 'MEGAJS-Demos (+https://mega.js.org/)'
+
   // Create a new storage and return its ready promise
   // (the .ready promise resolves to the storage itself when it's ready
   // so it's a nice shortcut to avoid having to handle the ready event)
-  return new Storage({ email, password }).ready
+  return new Storage({ email, password, userAgent }).ready
 }
 
 // Run the below code only if this code is run directly
