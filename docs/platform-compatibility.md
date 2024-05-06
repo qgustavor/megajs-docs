@@ -26,7 +26,7 @@ Is still possible to use Deno by disabling HTTPS when uploading or downloading, 
 
 Besides downloading and uploading files, this library works perfectly on Deno. In fact, as stated above, it's used to test the browser builds of the library.
 
-::: tip
+:::tip
 
 *Can someone convince MEGA to enable strong TLS on all their servers?* The fact they use still RC4 is really bad: cryptography is not a joke, even if they also use AES along, AES is used with static keys per file, which is not ideal for encrypted network connections and can lead to issues. Disabling HTTPS in clients and disabling strong ciphers in the servers they are increasing the risk of their users having data leaked and privacy reduced.
 
