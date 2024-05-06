@@ -20,7 +20,9 @@ file.downloadBuffer((error, data) => {
 })
 ```
 
-If you use `.download()` then you can also download files using Node streams either via pipes...
+Like when uploading, you need to use the I/O functions provided by your JavaScript platform to save data to disk, like `fs.writeFile` and `Deno.writeFile`.
+
+If you use `.download()` then you can also download files using Node.js streams either via pipes...
 
 ```js
 const stream = file.download()
@@ -34,9 +36,12 @@ stream.pipe(fs.createWriteStream(file.name))
 const stream = file.download()
 stream.on('error', error => console.error(error))
 stream.on('data', data => console.log(data))
+stream.on('end', () => console.log('finished'))
 ```
 
 Those are useful when dealing with huge files as `.downloadBuffer()` stores the entire file in memory. In the other hand, because of that, `.download()` can't return a promise. Also, you can still use callbacks with `.download()` like in V0.
+
+Despite `.download()` returning Node.js streams they still work in other platforms and you can it use with other libraries that work in browsers and expect Node.js streams as inputs, like the [streamsaver](https://www.npmjs.com/package/streamsaver) library. Other option is listening to the `data` and `end` events and pass data from those events to the I/O functions from your platform, like the `Deno.open` function.
 
 You can get progress events from the `progress` event like this:
 
@@ -51,7 +56,7 @@ In order to render the values returned by the `progress` event you have many opt
 
 * For browsers you can use [the `<progress>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) or libraries such as [progressbar.js](https://kimmobrunfeldt.github.io/progressbar.js/);
 * For Node.js there are libraries such as [cli-progress](https://www.npmjs.com/package/cli-progress) and [progress](https://www.npmjs.com/package/progress);
-* Other runtimes - like Bun - might support one or more of the above.
+* Other runtimes - like Deno and Bun - might support one or more of the above.
 
 You can download shared files by loading those from their URL instead of loading from the Storage class:
 

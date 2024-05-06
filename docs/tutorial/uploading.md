@@ -11,7 +11,10 @@ const file = await storage.upload('hello-world.txt', 'Hello world!').complete
 console.log('The file was uploaded!', file)
 ```
 
-Notice that the function do not return a promise but it's available in the `.complete` property. It will be useful later when dealing with huge files.
+Notice two things:
+
+- The `.upload()` function do not return a promise, instead one is available in the `.complete` property.
+- The second argument is the file contents, which can be strings, readable streams, buffers or anything that can be converted to a buffer (like TypedArrays). Since this library doesn't handle file reading, you need to implement it yourself using the functions provided by your JavaScript platform.
 
 Callbacks are still supported like in V0:
 
@@ -35,7 +38,7 @@ console.log('The file was uploaded!', file)
 
 It allows you setting more options, some which will be explained later. The complete list of options are listed in the [API reference page](../api.md).
 
-You can use Buffers to input file content, like this:
+As cited before, you can use Node.js Buffers to input file content, like this:
 
 ```js
 const file = await storage.upload('hello-world.txt', Buffer.from('SGVsbG8gd29ybGQh', 'base64')).complete
@@ -51,6 +54,10 @@ const file = await storage.upload({
 }, fs.createReadStream('hello-world.txt')).complete
 console.log('The file was uploaded!', file)
 ```
+
+Just Node.js Readable Streams are supported. If you are using other platform you need to use a compatible implementation like [this one](https://www.npmjs.com/package/readable-stream) and adapt your platform's streams into it. You can try hacking into the library and getting its internal stream constructor (but that can stop working in future versions unless someone sends a pull request improving this to not be a hack anymore).
+
+Unlike some AIs might say, this library does not accept file paths as upload sources, if you try that the path itself will be the file contents. You need to read file contents using the I/O functions provided by your JavaScript platform.
 
 :::info
 

@@ -30,13 +30,19 @@ You can use two-factor authentication, just provide the second factor code like 
 
 ```js
 const storage = new Storage({
-  email: 'user@example.com',
-  password: 'correct horse battery example',
-  userAgent: 'ExampleClient/1.0',
-  // highlight-next-line
+  ... // same options as before
   secondFactorCode: '123456'
 })
 ```
+
+You can simplify your code by awaiting the result of `new Storage().ready`, as `.ready` resolves to the `Storage` object, like this:
+
+```js
+// Create and already wait for the storage to be ready at the same time
+const storage = await new Storage({ ... }).ready
+```
+
+The file uploading example in the home page uses the above shortcut for simplicity.
 
 Events can still be used like in V0:
 
@@ -91,4 +97,4 @@ If you try to import the library using `import mega from 'megajs'` it will throw
 
 :::
 
-In the next part of this tutorial we will use the `storage` object to upload a file.
+In the next part of this tutorial we will use the `Storage` object to upload a file.
