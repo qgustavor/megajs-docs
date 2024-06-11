@@ -10,22 +10,30 @@ const mainFile = File.fromURL(url)
 mainFile.api.userAgent = 'MEGAJS-Demos (+https://mega.js.org/)'
 
 // Load attributes and get the selected file
-const selectedFile = await mainFile.loadAttributes()
+let selectedFile = await mainFile.loadAttributes()
 
 // For links of folders pointing to a specific file the mainFile
 // will point to the folder and the selectedFile will point to
 // the file, for all other cases those two variables will be the same
 
-console.log('File info:')
-console.log(selectedFile)
-
+// Handle directories:
 if (selectedFile.children) {
   console.log('It points to a directory, downloading the first file:')
   const firstChild = selectedFile.find(node => !node.children, true)
   if (!firstChild) throw Error('Folder have no children!')
-  const data = await firstChild.downloadBuffer({ forceHttps: false })
-  await Deno.writeFile(firstChild.name, data)
-} else {
-  const data = await selectedFile.downloadBuffer({ forceHttps: false })
-  await Deno.writeFile(selectedFile.name, data)
+  selectedFile = firstChild
 }
+
+// Show some info about the file to the user
+console.log('File info:')
+console.log(selectedFile)
+
+// Download everything into the memory
+// You need to set forceHttps to false in order to make
+// Deno connect to the unsafe MEGA download servers
+// (which use out-of-date TLS configurations)
+// That's not needed in Node.js nor in browsers
+const data = await selectedFile.downloadBuffer({ forceHttps: false })
+
+// Then save to the file
+await Deno.writeFile(selectedFile.name, data)
