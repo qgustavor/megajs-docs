@@ -11,6 +11,7 @@ mainFile.api.userAgent = 'MEGAJS-Demos (+https://mega.js.org/)'
 
 // Load attributes and get the selected file
 let selectedFile = await mainFile.loadAttributes()
+if (!selectedFile) throw Error('File not found!')
 
 // For links of folders pointing to a specific file the mainFile
 // will point to the folder and the selectedFile will point to
@@ -24,16 +25,23 @@ if (selectedFile.children) {
   selectedFile = firstChild
 }
 
-// Show some info about the file to the user
 console.log('File info:')
 console.log(selectedFile)
 
-// Download everything into the memory
 // You need to set forceHttps to false in order to make
 // Deno connect to the unsafe MEGA download servers
 // (which use out-of-date TLS configurations)
 // That's not needed in Node.js nor in browsers
-const data = await selectedFile.downloadBuffer({ forceHttps: false })
+const downloadStream = await selectedFile.download({ forceHttps: false })
 
-// Then save to the file
-await Deno.writeFile(selectedFile.name, data)
+// Open file for writing and get the writer
+const denoFile = await Deno.create(selectedFile.name)
+const writer = denoFile.writable.getWriter()
+
+// Iterate the download stream and write to the file
+for await (const data of downloadStream) {
+  await writer.write(data)
+}
+
+// Finally close the writer
+await writer.close()

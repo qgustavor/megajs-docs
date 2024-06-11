@@ -27,6 +27,11 @@ html[data-theme='dark'] {
   --ifm-color-primary-lightest: #ddbfbf;
 }
 
+html[data-theme='dark'] .hero--primary {
+  --ifm-hero-background-color: #380010;
+  --ifm-hero-text-color: #fff8f9;
+}
+
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
