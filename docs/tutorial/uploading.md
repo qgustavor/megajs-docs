@@ -55,9 +55,9 @@ const file = await storage.upload({
 console.log('The file was uploaded!', file)
 ```
 
-Just Node.js Readable Streams are supported. If you are using other platform you need to use a compatible implementation like [this one](https://www.npmjs.com/package/readable-stream) and adapt your platform's streams into it. You can try hacking into the library and getting its internal stream constructor (but that can stop working in future versions unless someone sends a pull request improving this to not be a hack anymore).
+Just Node.js Readable Streams are supported. If you are using other platform you need to use a compatible implementation like [this one](https://www.npmjs.com/package/readable-stream) and adapt your platform's streams into it. You can check an example on how adapt Deno's streams with Node.js' [in the examples page](../examples/file-uploading-stream).
 
-Unlike some AIs might say, this library does not accept file paths as upload sources, if you try that the path itself will be the file contents. You need to read file contents using the I/O functions provided by your JavaScript platform.
+Unlike what many AI chat bots assume, this library does **not** accept file paths as upload sources. If you try that the path itself will be the file contents. You need to read file contents using the I/O functions provided by your JavaScript platform.
 
 :::info
 
@@ -78,6 +78,8 @@ fileStream.pipe(uploadStream)
 const file = await fileStream.complete
 console.log('The file was uploaded!', file)
 ```
+
+Again, if you are not using Node.js, you can check an example on how adapt Deno's streams with Node.js' [in the examples page](../examples/file-uploading-stream).
 
 You can also use events instead of promises:
 

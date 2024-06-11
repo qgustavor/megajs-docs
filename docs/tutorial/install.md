@@ -30,12 +30,18 @@ It will load the library in `window.mega`, so `Storage` will be available via `w
 
 You can also host the above files into your server instead of loading those from unpkg or Skypack which may help privacy and security.
 
+Deno is also supported:
+
+```js
+import { Storage } from 'npm:megajs'
+```
+
 :::info
 
 Remember to import the browser version when targeting the browser environment, even when using build tools, as it includes browser-compatible cryptographic functions instead of depending on [the Node crypto module](https://nodejs.org/api/crypto.html). Trying to use a browser port of Node crypto like [crypto-browserify](https://www.npmjs.com/package/crypto-browserify) can result in huge build sizes and hurt performance.
 
 :::
 
-CommonJS support will be removed in MEGAJS 2.0.
+CommonJS support will be removed in MEGAJS 2.0 (as it makes the library quite harder to maintain).
 
 In the next part of this tutorial we will login to a MEGA account using the `Storage` class loaded above.

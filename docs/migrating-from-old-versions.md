@@ -8,13 +8,13 @@ sidebar_position: 4
 
 If you are migrating from [tonistiigi's mega package](https://www.npmjs.com/package/mega) you can follow instructions for how to migrate from V0 to V1 below, as V0 is mostly backyards compatible with tonistiigi's mega.
 
-The only issue when migrating is that MEGAJS includes ES Module exports which are incompatible with the old CommonJS exports because tree-shaking reasons. If you were importing tonistiigi's mega using ES Modules you will need to fix your imports: instead of a single default export the library exports multiple classes and helper functions.
+The only issue when migrating is that MEGAJS includes ES Module exports which are incompatible with the old CommonJS exports because tree-shaking reasons. If you were importing tonistiigi's mega using ES Modules you will need to fix your imports: instead of a single default export the library exports multiple classes and helper functions to enable tree shaking.
 
 If you migrate you will get features which are not available in tonistiigi's mega like:
 
 - File and folder sharing
 - File management functions
-- Support for browsers (seems using Browserify stop working at sometime)
+- Support for browsers (seems using Browserify stopped working at sometime)
 - Tree shaking when using ES Modules
 - Native crypto on Node.js
 

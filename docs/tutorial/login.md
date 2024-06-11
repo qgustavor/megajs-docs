@@ -24,7 +24,11 @@ const storage = new Storage({
 await storage.ready
 ```
 
-It is recommended to set up an user-agent. The library will default to `megajs/{version}` (where `{version}` is the library version). When deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (like Firefox).
+:::info
+
+It is recommended to set up an user-agent as MEGA uses it to identify clients, which can help finding issues. The library will default to `megajs/{version}` (where `{version}` is the library version) **BUT** when deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (like Firefox).
+
+:::
 
 You can use two-factor authentication, just provide the second factor code like this:
 

@@ -50,7 +50,7 @@ storage.upload({
 
 :::caution
 
-This code does not work anymore due to changes in MEGA. For more info [check this discussion](https://github.com/qgustavor/mega/discussions/108).
+This code does not work anymore due to changes in MEGA as now their servers blocks when a client tries to upload files without any encryption. You can still upload already encrypted files, like using CrococryptFile, as long there aren't headers or anything else to trip the detection. For more info [check this discussion](https://github.com/qgustavor/mega/discussions/108).
 
 :::
 

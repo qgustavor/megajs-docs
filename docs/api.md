@@ -6,9 +6,9 @@ sidebar_position: 3
 
 :::note
 
-This library handles MEGA encryption, file and folder handling and networking. Since this is a library focused on work on multiple platforms (Node.js and browsers) **it does not and will not** handle file reading, file writting nor any platform-specific file operations.
+This library handles MEGA encryption, file and folder handling and networking. Since this is a library focused on work on multiple platforms (Node.js and browsers) **it does not and will not** handle file reading, file writing nor any platform-specific file operations.
 
-You should implement file I/O using the functions provided by your platform (like reading files using `fs.createReadStream` on Node and `<input type="file">` on browsers, and writting using `fs.createWriteStream` on Node and `<a download>` on browsers).
+You should implement file I/O using the functions provided by your platform (like reading files using `fs.createReadStream` on Node and `<input type="file">` on browsers, and writing using `fs.createWriteStream` on Node and `<a download>` on browsers).
 
 :::
 

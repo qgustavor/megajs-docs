@@ -22,7 +22,7 @@ A website is only safe as if the server serving it isn't compromised. Doesn't ma
 
 In other words: avoid using the `Storage` class in a web page if you want to be safe.
 
-Or just assume the risk and try to convince people you are absolutely not injecting something to get your encryption keys like MEGA and WhatsApp do. Throw some <del>snake oil</del> <em>totally safe</em> checksum verification just to be sure.
+Or just assume the risk and try to convince people you are absolutely not injecting something to get your encryption keys like MEGA. Throw some <del>snake oil</del> <em>totally safe</em> checksum verification just to be sure.
 
 ## MEGA uses insecure HTTP by default when transferring encrypted data
 

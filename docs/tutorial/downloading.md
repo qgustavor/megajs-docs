@@ -30,13 +30,27 @@ stream.on('error', error => console.error(error))
 stream.pipe(fs.createWriteStream(file.name))
 ```
 
-... or by listening data events:
+... or by listening data events ...
 
 ```js
 const stream = file.download()
 stream.on('error', error => console.error(error))
 stream.on('data', data => console.log(data))
 stream.on('end', () => console.log('finished'))
+```
+
+... or by using `for await` like [in this example](../examples/file-streaming):
+
+```js
+const stream = file.download()
+try {
+  for await (const data of stream) {
+    console.log(data)
+  }
+  console.log('finished')
+} catch (error) {
+  console.error(error)
+}
 ```
 
 Those are useful when dealing with huge files as `.downloadBuffer()` stores the entire file in memory. In the other hand, because of that, `.download()` can't return a promise. Also, you can still use callbacks with `.download()` like in V0.

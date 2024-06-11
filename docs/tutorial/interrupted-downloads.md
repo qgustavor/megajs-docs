@@ -21,7 +21,7 @@ const writableStream = fs.createWriteStream(filename, {
 downloadStream.pipe(writableStream)
 ```
 
-The above example assume a Node.js environment, in other environments you might need to convert the Node stream returned by `download` to the way file streaming is handled in this environment.
+The above example assume a Node.js environment, in other environments you might need to convert the Node stream returned by `download` to the way file streaming is handled in this environment like [in this example](../examples/file-streaming).
 
 Interrupted downloads are not checked due to limitations on MEGA's MAC verification which only works on the entire file contents, but you can verify an already downloaded file using the `verify` function:
 
