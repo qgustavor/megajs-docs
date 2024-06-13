@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2.0105
+sidebar_position: 2.0115
 ---
 
-# Folder uploading
+# Recursive streamed folder uploading
 
 This demo combines streamed uploading and the use of recursive functions in order to handle folders. Running it will create a folder in the logged MEGA storage with the same name as the current working directory and will upload all files on it into this folder. It will prompt a lot for read permissions!
 
