@@ -42,13 +42,14 @@ function preprocessCode (code, condition) {
 const replacementFns = [
   e => preprocessCode(e, 'node'),
   e => {
-    e = preprocessCode(e, 'node').replace(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')")
+    e = preprocessCode(e, 'node')
     if (e.includes('await ')) {
       e = e
         .replace(/^(?!import|$)/gm, '  ')
         .replace(/^\s*$/m, "\n// Node doesn't support top-level await when using CJS\n;(async function () {")
         .replace(/\n*$/, '\n}()).catch(error => {\n  console.error(error)\n  process.exit(1)\n})\n')
     }
+    e = e.replace(/import (.+?) from 'megajs'/g, "const $1 = require('megajs')")
     return e
   },
   e => preprocessCode(e, 'browser').replace(/import (.+?) from 'megajs'/g, `import $1 from 'https://unpkg.com/megajs/dist/main.browser-es.mjs'`),
