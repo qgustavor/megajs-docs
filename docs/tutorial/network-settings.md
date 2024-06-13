@@ -58,7 +58,9 @@ API.fetchModule = someFetchImplementation
 
 If you replace `API.fetchModule` all code using the library will be affected, but the `api.userAgent`, `api.httpAgent` and `api.httpsAgent` shortcuts will *NOT* be ignored, as the reasoning for it is just to allow the user to provide an alternative fetch implementation for the current environment.
 
-Files created with `new File` and `File.fromURL` by default use a non-logged API instance and can be quite limited. To work around those limits accounts can be used, so downloading will use the limits from those:
+Notice that some future version will not import `node-fetch` if a global `fetch` doesn't exist in order to make `npm install` faster and as modern Node.js already include a global `fetch` implementation by default.
+
+Files created with `new File` and `File.fromURL` by default use a non-logged API instance and can be quite limited. To workaround those limits accounts can be used, so downloading will use the limits from those:
 
 ```js
 // First log in
