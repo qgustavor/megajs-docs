@@ -1,9 +1,11 @@
 import { File, verify } from 'npm:megajs'
 import { join } from 'https://deno.land/std@0.224.0/path/mod.ts'
 import { parseArgs } from 'jsr:@std/cli/parse-args'
+import ProgressBar from 'https://deno.land/x/progress@v1.4.5/mod.ts'
+import { orderBy } from 'npm:natural-orderby'
 
 // Get the shared file URL from Deno.args or by prompting
-const args = parseArgs(Deno.args, { collect: ['filter', 'ignore'] })
+const args = parseArgs(Deno.args, { collect: ['filter', 'ignore', 'verbose'] })
 const url = args._[0] ?? prompt('Enter the URL of a shared MEGA file or folder:')
 
 // Create a File object
@@ -30,9 +32,12 @@ async function downloadFile (megaFile, folderPath) {
     } else if (!childFolderStats.isDirectory) {
       throw Error(childFolderPath + ' is not a directory!')
     }
+    
+    // Sort children to avoid files being downloaded in a weird order
+    const sortedChildren = orderBy(megaFile.children, e => e.name)
 
     // Download files into it
-    for (const child of megaFile.children) {
+    for (const child of sortedChildren) {
       await downloadFile(child, childFolderPath)
     }
     return
@@ -41,13 +46,19 @@ async function downloadFile (megaFile, folderPath) {
   // Handle filters (files need to match all filters)
   if (args.filter) {
     for (const filter of args.filter) {
-      if (!megaFile.name.includes(filter)) return
+      if (!megaFile.name.includes(filter)) {
+        if (args.verbose) console.log(megaFile.name, 'does not match filter')
+        return
+      }
     }
   }
   // Handle ignores (files need to not match all ignores)
   if (args.ignore) {
     for (const ignore of args.ignore) {
-      if (megaFile.name.includes(ignore)) return
+      if (megaFile.name.includes(ignore)) {
+        if (args.verbose) console.log(megaFile.name, 'matches ignore filter')
+        return
+      }
     }
   }
 
@@ -56,7 +67,10 @@ async function downloadFile (megaFile, folderPath) {
   const fileStats = await Deno.stat(filePath).catch(() => null)
 
   // Skip if there is no data left to download
-  if (fileStats && fileStats.size >= megaFile.size) return
+  if (fileStats && fileStats.size >= megaFile.size) {
+    if (args.verbose) console.log(megaFile.name, 'was already downloaded')
+    return
+  }
 
   console.log('Downloading', megaFile.name, 'into', '"' + folderPath + '"')
   if (fileStats) console.log('Continuing interrupted download at', fileStats.size, 'bytes')
@@ -66,6 +80,13 @@ async function downloadFile (megaFile, folderPath) {
     ? await Deno.open(filePath, { append: true })
     : await Deno.create(filePath)
   const writer = denoFile.writable.getWriter()
+  
+  // Create a progress bar to track the download progress
+  const progressBar = new ProgressBar({
+    display: ':percent :bar :time/:eta',
+    total: megaFile.size
+  })
+  progressBar.render(0)
 
   // You need to set forceHttps to false in order to make
   // Deno connect to the unsafe MEGA download servers
@@ -75,6 +96,11 @@ async function downloadFile (megaFile, folderPath) {
     // Start is needed to handle interrupted downloads
     start: fileStats ? fileStats.size : 0,
     forceHttps: false
+  })
+  
+  // Handle progress events
+  downloadStream.on('progress', event => {
+    progressBar.render(event.bytesLoaded)
   })
 
   // Iterate the download stream and write to the file
@@ -87,46 +113,52 @@ async function downloadFile (megaFile, folderPath) {
 
   // Verify the file if the download started mid-file
   if (fileStats) {
-    const verifyDenoFile = await Deno.open(filePath)
-    const verifyReader = verifyDenoFile.readable.getReader()
-    const verifyStream = verify(megaFile.key)
-
-    // Handle the end and error events
-    const verifyResultPromise = new Promise(resolve => {
-      verifyStream.on('end', () => resolve(false))
-      verifyStream.on('error', () => resolve(true))
-    })
-
-    // Convert from ReadableStream to a Node.js stream
-    while (true) {
-      const result = await verifyReader.read()
-
-      if (result.value) {
-        const canContinueWritting = verifyStream.write(result.value)
-        if (!canContinueWritting) {
-          // Verify stream is under pressure, wait it to drain
-          await new Promise(resolve => verifyStream.once('drain', resolve))
-        }
-      }
-
-      if (result.done) {
-        // End the stream when there is no more data to be read
-        verifyStream.end()
-
-        // And break out the while loop
-        break
-      }
-    }
-
-    // Warn the user if the file is corrupt
-    const isFileValid = await verifyResultPromise
+    const isFileValid = await verifyFile(filePath, megaFile)
     if (isFileValid) {
       console.log(filePath, 'was been downloaded and verified')
     } else {
+      // Warn the user if the file is corrupt and rename the file
       console.log(filePath, 'is corrupt')
       await Deno.rename(filePath, filePath + '.corrupt')
     }
   } else {
     console.log(filePath, 'was been downloaded')
   }
+}
+
+// This function verifies if the file ("filePath") matches the MEGA file ("megaFile")
+// Returns true if the MAC verification passes, false if not
+async function verifyFile (filePath, megaFile) {
+  const verifyDenoFile = await Deno.open(filePath)
+  const verifyReader = verifyDenoFile.readable.getReader()
+  const verifyStream = verify(megaFile.key)
+  
+  // Handle the end and error events
+  const verifyResultPromise = new Promise(resolve => {
+    verifyStream.on('end', () => resolve(false))
+    verifyStream.on('error', () => resolve(true))
+  })
+  
+  // Convert from ReadableStream to a Node.js stream
+  while (true) {
+    const result = await verifyReader.read()
+  
+    if (result.value) {
+      const canContinueWritting = verifyStream.write(result.value)
+      if (!canContinueWritting) {
+        // Verify stream is under pressure, wait it to drain
+        await new Promise(resolve => verifyStream.once('drain', resolve))
+      }
+    }
+  
+    if (result.done) {
+      // End the stream when there is no more data to be read
+      verifyStream.end()
+  
+      // And break out the while loop
+      break
+    }
+  }
+  
+  return verifyResultPromise
 }
