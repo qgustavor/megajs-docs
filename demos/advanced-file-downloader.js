@@ -5,7 +5,7 @@ import ProgressBar from 'https://deno.land/x/progress@v1.4.5/mod.ts'
 import { orderBy } from 'npm:natural-orderby'
 
 // Get the shared file URL from Deno.args or by prompting
-const args = parseArgs(Deno.args, { collect: ['filter', 'ignore', 'verbose'] })
+const args = parseArgs(Deno.args, { collect: ['filter', 'ignore'], boolean: ['verbose'] })
 const url = args._[0] ?? prompt('Enter the URL of a shared MEGA file or folder:')
 
 // Create a File object
