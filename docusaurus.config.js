@@ -106,6 +106,10 @@ const config = {
               {
                 label: 'GitHub',
                 href: 'https://github.com/qgustavor/mega'
+              },
+              {
+                label: 'Sponsor this project',
+                href: 'https://github.com/sponsors/qgustavor/'
               }
             ]
           }
