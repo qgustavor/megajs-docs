@@ -30,7 +30,7 @@ To add insult to injury MEGA's official and most third-party clients do not use 
 
 HTTPS do not have this issue because encryption keys are not static, so even if the contents of a certain file get published, someone intercepting traffic can not know if someone download that file, at most can only guess from the file size.
 
-Since MEGA servers support HTTPS it can be used to mitigate this issue: this library allows forcing HTTPS when downloading and uploading by setting `forceHttps` to `true`. In the other hand, sometimes forcing HTTPS result connections being dropped as MEGA insists that HTTPS should not be used when possible to save server resources.
+Since MEGA servers support HTTPS it can be used to mitigate this issue: this library allows forcing HTTPS when downloading and uploading by setting `forceHttps` to `true`. In the other hand, sometimes forcing HTTPS result connections being dropped as MEGA insists that HTTPS should not be used when possible to save server resources. But that don't works with Deno because MEGA servers use outdated TLS settings which are not supported by Deno, so downloading and uploading with Deno will **always** use HTTP. Which is ironic because both MEGA and Deno try to "look" safe, but their combination is this mess. Although the biggest fault is on MEGA.
 
 ## File integrity can only be checked after the entire file is downloaded
 

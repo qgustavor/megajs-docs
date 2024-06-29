@@ -12,11 +12,7 @@ import { Storage } from 'megajs'
 const storage = new Storage({
   email: 'user@example.com',
   password: 'correct horse battery example',
-  // node2deno: browser
-  userAgent: null
-  // node2deno else
   userAgent: 'ExampleApplication/1.0'
-  // node2deno end
 })
 
 // Will resolve once the user is logged in
@@ -26,7 +22,7 @@ await storage.ready
 
 :::info
 
-It is recommended to set up an user-agent as MEGA uses it to identify clients, which can help finding issues. The library will default to `megajs/{version}` (where `{version}` is the library version) **BUT** when deploying to browsers set `userAgent` to `null` as it can cause issues in some browsers which allow client-side code to override the `user-agent` header (like Firefox).
+It is recommended to set up an user-agent as MEGA uses it to identify clients, which can help finding issues. The library will default to `megajs/{version}` (where `{version}` is the library version).
 
 :::
 

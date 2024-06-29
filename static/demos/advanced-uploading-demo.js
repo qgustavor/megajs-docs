@@ -19,11 +19,7 @@ async function uploadDirectory (megaFolder, folderPath) {
 }
 
 async function uploadFile (megaFolder, folderPath, name) {
-  // You need to set forceHttps to false in order to make
-  // Deno connect to the unsafe MEGA upload servers
-  // (which use out-of-date TLS configurations)
-  // That's not needed in Node.js nor in browsers
-  const uploadStream = megaFolder.upload({ name, forceHttps: false })
+  const uploadStream = megaFolder.upload({ name })
 
   // Get the file and its reader
   const denoFile = await Deno.open(join(folderPath, name))

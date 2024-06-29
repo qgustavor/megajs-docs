@@ -79,8 +79,6 @@ import { File } from 'megajs'
 
 // Get the file object from the URL
 const file = File.fromURL('https://mega.nz/file/example#example')
-// node2deno single: deno
-file.api.userAgent = null
 
 // Load file attributes
 await file.loadAttributes()
@@ -89,8 +87,6 @@ await file.loadAttributes()
 const data = await file.downloadBuffer()
 console.log(data)
 ```
-
-When deploying to browsers use `file.api.userAgent = null` to not set an user-agent since it will cause CORS issues on browsers that allow the `user-agent` header to be set (like Firefox).
 
 Shared files loaded using `File.fromURL` don't have attributes - such as name and size - loaded by default, that's why `loadAttributes` is called. If you don't need those attributes, just file contents, you can download the file directly using `.download()`:
 

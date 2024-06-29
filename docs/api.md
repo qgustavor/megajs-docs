@@ -191,11 +191,9 @@ This function downloads files using chunked multiple parallel connections to spe
 * `maxChunkSize`: maximum chunk size, in bytes (max 1MB);
 * `returnCiphertext`: if `true` the ciphertext will be returned, which can be decrypted later using `decrypt` low level function.
 * `handleRetries`: accepts a function to handle retries on chunk downloading errors, overrides the function defined by `File.defaultHandleRetries`;
-* `forceHttps`: if set to `true` will download using HTTPS, if set to `false` will download using HTTP. Default to `false` in the Node build and `true` in the browser build. Should be set to `false` in order to the library work in Deno.
+* `forceHttps`: if set to `true` will download using HTTPS, if set to `false` will download using HTTP. Default to `false` in the Node build and `true` in the browser build or if a `Deno` global is set.
 
 The download function also support `start` and `end` options, like [`fs.createReadStream`](https://nodejs.org/api/fs.html#fs_fs_createreadstream_path_options).
-
-Deno is not supported, but if you really want to use it then set `forceHttps` to `false` otherwise Deno will block connections to MEGA servers. The reason is that MEGA use insecure TLS ciphers under the assumption their own crypto is enough, but Deno blocks that as it's "secure by default" and does not allow disabling this security layer unless you disable encryption entirely by setting `forceHttps` to `false`.
 
 If the number of connections get limited to `1` then chunking will be disabled and the entire file will be downloaded using a single connection. For some reason doing this often results in less connection errors. At the moment this feature relies on a node-fetch extension and might not work in non-Node environments.
 
@@ -329,9 +327,7 @@ To handle upload completion or errors you can:
 * `chunkSizeIncrement`: how many bytes to increment each time (default: 128KB);
 * `maxChunkSize`: maximum chunk size, in bytes (max 1MB);
 * `handleRetries`: accepts a function to handle retries on chunk downloading errors, overrides the function defined by `File.defaultHandleRetries`;
-* `forceHttps`: if set to `true` will upload using HTTPS, if set to `false` will upload using HTTP. Default to `false` in the Node build and `true` in the browser build. Should be set to `false` in order to the library work in Deno.
-
-Deno is not supported, but if you really want to use it then set `forceHttps` to `false` otherwise Deno will block connections to MEGA servers. The reason is that MEGA use insecure TLS ciphers under the assumption their own crypto is enough, but Deno blocks that as it's "secure by default" and does not allow disabling this security layer unless you disable encryption entirely by setting `forceHttps` to `false`.
+* `forceHttps`: if set to `true` will upload using HTTPS, if set to `false` will upload using HTTP. Default to `false` in the Node build and `true` in the browser build or if a `Deno` global is set.
 
 Thumbnail images are 120px x 120px JPEG images with 70% quality. Preview images are JPEG images with a maximum width and height size of 1000px and 75% quality. Please use those settings to avoid breaking compatibility with other MEGA clients. This library don't generates neither preview or thumbnail images, only provides a way to uploading those.
 
