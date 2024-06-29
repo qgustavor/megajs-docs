@@ -66,9 +66,7 @@ progressBar.render(0)
 const uploadStream = rootFolder.upload({
   name: buildName,
   // Seems that setting maxConnections to 1 improved results
-  maxConnections: 1,
-  // Because... the same reason shown as in all other examples
-  forceHttps: false
+  maxConnections: 1
 }, data)
 
 // Handle progress events

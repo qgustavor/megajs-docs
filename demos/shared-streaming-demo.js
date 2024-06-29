@@ -28,11 +28,7 @@ if (selectedFile.children) {
 console.log('File info:')
 console.log(selectedFile)
 
-// You need to set forceHttps to false in order to make
-// Deno connect to the unsafe MEGA download servers
-// (which use out-of-date TLS configurations)
-// That's not needed in Node.js nor in browsers
-const downloadStream = await selectedFile.download({ forceHttps: false })
+const downloadStream = await selectedFile.download()
 
 // Open file for writing and get the writer
 const denoFile = await Deno.create(selectedFile.name)

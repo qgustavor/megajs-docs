@@ -28,12 +28,8 @@ if (selectedFile.children) {
 console.log('File info:')
 console.log(selectedFile)
 
-// Download everything into the memory
-// You need to set forceHttps to false in order to make
-// Deno connect to the unsafe MEGA download servers
-// (which use out-of-date TLS configurations)
-// That's not needed in Node.js nor in browsers
-const data = await selectedFile.downloadBuffer({ forceHttps: false })
+// Download everything into a variable
+const data = await selectedFile.downloadBuffer()
 
 // Then save to the file
 await Deno.writeFile(selectedFile.name, data)

@@ -5,11 +5,7 @@ const storage = await getLoggedInStorage()
 const name = prompt('Enter a file name:')
 const denoFile = await Deno.open(name)
 
-// You need to set forceHttps to false in order to make
-// Deno connect to the unsafe MEGA upload servers
-// (which use out-of-date TLS configurations)
-// That's not needed in Node.js nor in browsers
-const uploadStream = storage.upload({ name, forceHttps: false })
+const uploadStream = storage.upload({ name })
 
 // Get the file reader
 const inputReader = denoFile.readable.getReader()

@@ -19,14 +19,7 @@ async function handleFolder (path, name, rootNode) => {
       await handleFolder(filePath, entry.name, megaFolder)
     } else {
       const data = await Deno.readFile(filePath)
-      await megaFolder.upload({
-        name: entry.name,
-        // You need to set forceHttps to false in order to make
-        // Deno connect to the unsafe MEGA upload servers
-        // (which use out-of-date TLS configurations)
-        // That's not needed in Node.js nor in browsers
-        forceHttps: false
-      }, data).complete
+      await megaFolder.upload(entry.name, data).complete
     }
   }
 }
