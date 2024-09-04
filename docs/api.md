@@ -208,7 +208,7 @@ Wraps the `.download()` function and return a Promise which resolves to a Buffer
 
 #### `.find(query, [deep])`
 
-Search for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
+Search for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a MutableFile object as argument and should return a boolean.
 
 ```js
 // Returns a file named `test.txt` inside the folder or undefined if no file gets found
@@ -223,7 +223,7 @@ folder.find(file => file.size > 1024)
 
 #### `.filter(query, [deep])`
 
-Filters for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a File object as argument and should return a boolean.
+Filters for files in directores, recursively if the deep argument is `true`. Queries might be strings (which matches names, case sensitive), arrays of valid names (case sensitive) or a function which receives a MutableFile object as argument and should return a boolean.
 
 ```js
 // Returns an array with all files named `test.txt` inside the folder
@@ -238,7 +238,7 @@ folder.filter(file => file.size > 1024)
 
 #### `.navigate(query)`
 
-Tranverses directories. Query can be a string with a `/` delimited path or an array of strings. Names are matched case sensitive.
+Traverses directories. Query can be a string with a `/` delimited path or an array of strings. Names are matched case sensitive.
 
 ```js
 // Returns a file named `test.txt` inside "some folder"
