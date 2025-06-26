@@ -36,6 +36,8 @@ Deno is also supported:
 import { Storage } from 'npm:megajs'
 ```
 
+Since Deno 2.4.0 you can use `--allow-net=*.mega.co.nz` for improved security (the API still uses `.co.nz`, not `.nz` nor `.io`).
+
 :::info
 
 Remember to import the browser version when targeting the browser environment, even when using build tools, as it includes browser-compatible cryptographic functions instead of depending on [the Node crypto module](https://nodejs.org/api/crypto.html). Trying to use a browser port of Node crypto like [crypto-browserify](https://www.npmjs.com/package/crypto-browserify) can result in huge build sizes and hurt performance.
