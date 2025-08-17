@@ -22,7 +22,7 @@ await storage.ready
 
 :::info
 
-It is recommended to set up an user-agent as MEGA uses it to identify clients, which can help finding issues. The library will default to `megajs/{version}` (where `{version}` is the library version).
+It is recommended to set up an user-agent as MEGA uses it to identify clients, which can help solving issues. The library will default to `megajs/{version}` (where `{version}` is the library version) in non-browser environments (as setting an user-agent on Firefox causes CORS issues).
 
 :::
 
