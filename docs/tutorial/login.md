@@ -107,13 +107,13 @@ Resuming a session is important for these 2 things:
   - MEGA won't be flooded with abandoned sessions from closed browser tabs. The open sessions can be seen on MEGA >> Account >> Security.
 
 How to save a session to reload later
-```
+```js
 var sessionJson = storage.toJSON();
 // Save it to localStorage of browser or similar
 ```
 
 How to load a session from JSON
-```
+```js
 var sessionJson = ...
 var storage = Storage.fromJSON(sessionJson);
 await storage.reload();
