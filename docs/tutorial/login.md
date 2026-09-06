@@ -108,13 +108,13 @@ Resuming a session is important for these 2 things:
 
 How to save a session to reload later
 ```js
-var sessionJson = storage.toJSON();
+const sessionJson = storage.toJSON()
 // Save it to localStorage of browser or similar
 ```
 
 How to load a session from JSON
 ```js
-var sessionJson = ...
-var storage = Storage.fromJSON(sessionJson);
-await storage.reload();
+const sessionJson = ...
+const storage = Storage.fromJSON(sessionJson)
+await storage.reload()
 ```
