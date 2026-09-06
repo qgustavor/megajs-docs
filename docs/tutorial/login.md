@@ -98,3 +98,23 @@ If you try to import the library using `import mega from 'megajs'` it will throw
 :::
 
 In the next part of this tutorial we will use the `Storage` object to upload a file.
+
+
+# Resume a Session
+
+Resuming a session is important for these 2 things:
+  - User don't need to type email and password again
+  - MEGA won't be flooded with abandoned sessions from closed browser tabs. The open sessions can be seen on MEGA >> Account >> Security.
+
+How to save a session to reload later
+```js
+const sessionJson = storage.toJSON()
+// Save it to localStorage of browser or similar
+```
+
+How to load a session from JSON
+```js
+const sessionJson = ...
+const storage = Storage.fromJSON(sessionJson)
+await storage.reload()
+```
